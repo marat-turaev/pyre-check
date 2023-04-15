@@ -887,12 +887,7 @@
             "local_features": [
               { "has": "first-index" }, { "first-index": "tainted" }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -919,12 +914,7 @@
             "local_features": [
               { "has": "first-index" }, { "first-index": "tainted" }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }

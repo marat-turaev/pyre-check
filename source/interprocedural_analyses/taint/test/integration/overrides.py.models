@@ -586,12 +586,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -616,12 +611,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -646,12 +636,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -676,12 +661,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -708,12 +688,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -749,12 +724,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -779,12 +749,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -820,12 +785,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -861,12 +821,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }

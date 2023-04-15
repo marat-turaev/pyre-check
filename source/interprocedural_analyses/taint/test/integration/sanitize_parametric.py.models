@@ -17,6 +17,7 @@
           {
             "kinds": [
               {
+                "features": [ { "via": "tito" } ],
                 "leaves": [ { "name": "sanitize_parametric.a_source_y" } ],
                 "length": 1,
                 "kind": "TestA[Y]"
@@ -41,6 +42,7 @@
           {
             "kinds": [
               {
+                "features": [ { "via": "tito" } ],
                 "leaves": [ { "name": "sanitize_parametric.a_sink_x" } ],
                 "length": 1,
                 "kind": "TestA[X]"
@@ -60,7 +62,7 @@
         ]
       }
     ],
-    "features": [],
+    "features": [ { "via": "tito" } ],
     "sink_handle": {
       "kind": "Call",
       "callee": "sanitize_parametric.partial_issue_sinks",

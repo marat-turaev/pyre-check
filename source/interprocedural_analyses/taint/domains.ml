@@ -75,6 +75,8 @@ module CallInfo = struct
   let name = "call info"
 
   type t =
+    (* Dummy CallInfo used in callsite models only *)
+    | CallsiteModel
     (* User-specified taint on a model. *)
     | Declaration of {
         (* If not provided, the leaf name set is set as the callee when taint is propagated. *)
@@ -96,6 +98,7 @@ module CallInfo = struct
   let declaration = Declaration { leaf_name_provided = false }
 
   let pp formatter = function
+    | CallsiteModel -> Format.fprintf formatter "CallsiteModel"
     | Declaration _ -> Format.fprintf formatter "Declaration"
     | Tito -> Format.fprintf formatter "Tito"
     | Origin location -> Format.fprintf formatter "Origin(%a)" Location.WithModule.pp location
@@ -118,6 +121,7 @@ module CallInfo = struct
     | CallSite _ ->
         true (* These are actual call sites *)
     | Declaration _
+    | CallsiteModel
     | Tito ->
         false
 
@@ -137,6 +141,7 @@ module CallInfo = struct
   (* Returns the (dictionary key * json) to emit *)
   let to_json ~filename_lookup trace : string * Yojson.Safe.t =
     match trace with
+    | CallsiteModel -> "callsitemodel", `Null
     | Declaration _ -> "declaration", `Null
     | Tito -> "tito", `Null
     | Origin location ->
@@ -175,9 +180,10 @@ module CallInfo = struct
   let widen set = set
 
   let strip_for_callsite = function
-    | Origin _ -> Origin Location.WithModule.any
-    | CallSite { port; path; location = _; callees } ->
-        CallSite { port; path; location = Location.WithModule.any; callees }
+    | CallsiteModel
+    | Origin _
+    | CallSite _ ->
+        CallsiteModel
     | Declaration _ -> Declaration { leaf_name_provided = false }
     | Tito -> Tito
 end
@@ -1228,7 +1234,8 @@ end = struct
       in
       match call_info with
       | CallInfo.Origin _
-      | CallInfo.CallSite _ ->
+      | CallInfo.CallSite _
+      | CallInfo.CallsiteModel ->
           let call_info = CallInfo.CallSite { location; callees; port; path } in
           let local_taint =
             local_taint |> LocalTaintDomain.transform TraceLength.Self Map ~f:TraceLength.increase

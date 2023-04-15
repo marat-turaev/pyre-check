@@ -287,7 +287,6 @@
               { "has": "first-index" },
               { "first-index": "app_id" },
               { "first-index": "timestamp" },
-              { "always-via": "obscure:model" },
               { "always-via": "tito" }
             ],
             "tito_positions": [
@@ -363,7 +362,7 @@
               }
             ],
             "local_features": [
-              { "always-via": "obscure:model" }, { "always-via": "tito" }
+              { "via": "obscure:model" }, { "always-via": "tito" }
             ],
             "tito_positions": [
               { "line": 24, "start": 19, "end": 25 },

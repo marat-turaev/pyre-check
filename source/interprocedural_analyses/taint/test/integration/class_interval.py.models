@@ -324,12 +324,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -354,12 +349,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -386,12 +376,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -418,12 +403,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -448,12 +428,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -478,12 +453,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -508,12 +478,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -538,12 +503,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -568,12 +528,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -598,12 +553,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -628,35 +578,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
-          },
-          {
-            "caller_interval": [ { "lower": 87, "upper": 90 } ],
-            "receiver_interval": [ { "lower": 106, "upper": 107 } ],
-            "is_self_call": false,
-            "kinds": [
-              {
-                "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
-                "length": 1,
-                "kind": "Test"
-              }
-            ],
-            "call": {
-              "position": {
-                "filename": "builtins.pyi",
-                "line": -1,
-                "start": -1,
-                "end": -1
-              },
-              "resolves_to": [ "class_interval.E6.m3" ],
-              "port": "result"
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -681,12 +603,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -713,16 +630,7 @@
                 "kind": "Test"
               }
             ],
-            "call": {
-              "position": {
-                "filename": "builtins.pyi",
-                "line": -1,
-                "start": -1,
-                "end": -1
-              },
-              "resolves_to": [ "class_interval.A3.m1" ],
-              "port": "formal(x)"
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -747,35 +655,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
-          },
-          {
-            "caller_interval": [ { "lower": 87, "upper": 90 } ],
-            "receiver_interval": [ { "lower": 106, "upper": 107 } ],
-            "is_self_call": false,
-            "kinds": [
-              {
-                "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
-                "length": 1,
-                "kind": "Test"
-              }
-            ],
-            "call": {
-              "position": {
-                "filename": "builtins.pyi",
-                "line": -1,
-                "start": -1,
-                "end": -1
-              },
-              "resolves_to": [ "class_interval.E6.m3" ],
-              "port": "result"
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -800,12 +680,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -830,12 +705,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -862,12 +732,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -892,12 +757,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -922,12 +782,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -954,16 +809,7 @@
                 "kind": "Test"
               }
             ],
-            "call": {
-              "position": {
-                "filename": "builtins.pyi",
-                "line": -1,
-                "start": -1,
-                "end": -1
-              },
-              "resolves_to": [ "class_interval.A3.m1" ],
-              "port": "formal(x)"
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -988,12 +834,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -1018,12 +859,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -1048,12 +884,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -1078,12 +909,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -1108,12 +934,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }
@@ -1140,12 +961,7 @@
                 "kind": "Test"
               }
             ],
-            "origin": {
-              "filename": "builtins.pyi",
-              "line": -1,
-              "start": -1,
-              "end": -1
-            }
+            "callsitemodel": null
           }
         ]
       }

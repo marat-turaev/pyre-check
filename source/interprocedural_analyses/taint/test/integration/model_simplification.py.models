@@ -276,10 +276,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],
@@ -307,10 +307,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],
@@ -334,10 +334,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],
@@ -366,10 +366,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],
@@ -444,10 +444,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],
@@ -526,10 +526,10 @@
               {
                 "features": [
                   { "via": "object" },
-                  { "always-via": "obscure:model" },
-                  { "always-via": "tito-broadening" },
-                  { "always-via": "tito" },
-                  { "always-via": "broadening" },
+                  { "via": "obscure:model" },
+                  { "via": "tito-broadening" },
+                  { "via": "tito" },
+                  { "via": "broadening" },
                   { "via": "obscure:unknown-callee" }
                 ],
                 "leaves": [ { "name": "getattr" } ],

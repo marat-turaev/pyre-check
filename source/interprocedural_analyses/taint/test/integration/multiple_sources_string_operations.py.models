@@ -1344,6 +1344,7 @@
               { "always-via": "obscure:model" },
               { "always-via": "string_concat_rhs" },
               { "always-via": "format-string" },
+              { "via": "string_concat_lhs" },
               { "always-via": "tito" }
             ],
             "tito_positions": [

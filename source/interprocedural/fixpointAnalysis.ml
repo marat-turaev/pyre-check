@@ -216,6 +216,17 @@ module Make (Analysis : ANALYSIS) = struct
           let description = "InterproceduralFixpointModel"
         end)
 
+    module SharedCallsiteModels =
+      Memory.WithCache.Make
+        (Target.SharedMemoryKey)
+        (struct
+          type t = Model.t
+
+          let prefix = Prefix.make ()
+
+          let description = "InterproceduralFixpointCallsiteModel"
+        end)
+
     module SharedResults =
       Memory.WithCache.Make
         (Target.SharedMemoryKey)
@@ -268,6 +279,8 @@ module Make (Analysis : ANALYSIS) = struct
       | None -> get_old_model callable
 
 
+    let get_callsite_model callable = SharedCallsiteModels.get callable
+
     let get_result callable = SharedResults.get callable |> Option.value ~default:Result.empty
 
     let set_result callable result =
@@ -307,6 +320,9 @@ module Make (Analysis : ANALYSIS) = struct
       (* Separate diagnostics from state to speed up lookups, and cache fixpoint state
          separately. *)
       let () = SharedModels.add callable state.model in
+      (* Separate storing callsite model to look up smaller model at callsites *)
+      let callsite_model = state.model |> Model.strip_for_callsite in
+      let () = SharedCallsiteModels.add callable callsite_model in
       (* Skip result writing unless necessary (e.g. overrides don't have results) *)
       let () =
         match callable with
@@ -320,6 +336,8 @@ module Make (Analysis : ANALYSIS) = struct
 
     let add_predefined epoch callable model =
       let () = SharedModels.add callable model in
+      (* Declared models should not be stripped: they already are *)
+      let () = SharedCallsiteModels.add callable model in
       let step = { epoch; iteration = 0 } in
       SharedFixpoint.add callable { is_partial = false; step }
 
@@ -427,7 +445,7 @@ module Make (Analysis : ANALYSIS) = struct
           ~callable
           ~define
           ~previous_model
-          ~get_callee_model:State.get_model
+          ~get_callee_model:State.get_callsite_model
       with
       | exn ->
           let () = Logger.on_analyze_define_exception ~iteration ~callable ~exn in
@@ -447,19 +465,18 @@ module Make (Analysis : ANALYSIS) = struct
     in
     let new_model =
       let lookup override =
-        match State.get_model override with
+        match State.get_callsite_model override with
         | None ->
             Format.asprintf
               "During override analysis, can't find model for %a"
               Target.pp_pretty
               override
             |> failwith
-        | Some model -> model |> Model.strip_for_callsite
+        | Some model -> model
       in
       let direct_model =
-        State.get_model (Target.get_corresponding_method callable)
+        State.get_callsite_model (Target.get_corresponding_method callable)
         |> Option.value ~default:Analysis.empty_model
-        |> Model.strip_for_callsite
       in
       overrides
       |> List.map ~f:lookup

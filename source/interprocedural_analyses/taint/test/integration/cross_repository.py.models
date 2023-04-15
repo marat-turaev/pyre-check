@@ -19,6 +19,7 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
+                  { "name": "cross_repository.returns_crtex_source" },
                   {
                     "port": "producer:1:result",
                     "name": "crossRepositorySource"
@@ -109,6 +110,7 @@
             "kinds": [
               {
                 "leaves": [
+                  { "name": "cross_repository.cross_repository_anchor_sink" },
                   {
                     "port": "anchor:formal(0)",
                     "name": "crossRepositoryAnchor"
@@ -403,6 +405,7 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
+                  { "name": "cross_repository.reaches_crtex_sink" },
                   {
                     "port": "producer:1:formal(x)",
                     "name": "crossRepositorySink"
@@ -437,6 +440,7 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
+                  { "name": "cross_repository.reaches_crtex_sink" },
                   {
                     "port": "producer:1:formal(x)",
                     "name": "crossRepositorySink"
@@ -477,6 +481,7 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
+                  { "name": "cross_repository.returns_crtex_source" },
                   {
                     "port": "producer:1:result",
                     "name": "crossRepositorySource"
@@ -511,6 +516,7 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
+                  { "name": "cross_repository.returns_crtex_source" },
                   {
                     "port": "producer:1:result",
                     "name": "crossRepositorySource"
