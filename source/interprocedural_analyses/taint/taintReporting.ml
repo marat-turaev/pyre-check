@@ -292,24 +292,7 @@ let save_results_to_directory
     ()
 
 
-let report
-    ~scheduler
-    ~static_analysis_configuration:
-      {
-        Configuration.StaticAnalysis.save_results_to;
-        output_format;
-        configuration = { local_root; show_error_traces; _ };
-        _;
-      }
-    ~taint_configuration
-    ~filename_lookup
-    ~override_graph
-    ~callables
-    ~skipped_overrides
-    ~model_verification_errors
-    ~fixpoint_timer
-    ~fixpoint_state
-  =
+let finish_fixpoint ~scheduler ~taint_configuration ~callables ~fixpoint_timer ~fixpoint_state =
   let errors =
     extract_errors
       ~taint_configuration
@@ -334,6 +317,27 @@ let report
         ]
       ()
   in
+  errors
+
+
+let report
+    ~scheduler
+    ~static_analysis_configuration:
+      {
+        Configuration.StaticAnalysis.save_results_to;
+        output_format;
+        configuration = { local_root; show_error_traces; _ };
+        _;
+      }
+    ~taint_configuration
+    ~filename_lookup
+    ~override_graph
+    ~callables
+    ~skipped_overrides
+    ~model_verification_errors
+    ~fixpoint_state
+    ~errors
+  =
   (* Dump results to output directory if one was provided, and return a list of json (empty whenever
      we dumped to a directory) to summarize *)
   let error_to_json error =

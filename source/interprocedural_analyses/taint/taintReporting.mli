@@ -26,6 +26,14 @@ val fetch_and_externalize
   Target.t ->
   Yojson.Safe.t list
 
+val finish_fixpoint
+  :  scheduler:Scheduler.t ->
+  taint_configuration:TaintConfiguration.SharedMemory.t ->
+  callables:Target.Set.t ->
+  fixpoint_timer:Timer.t ->
+  fixpoint_state:Fixpoint.t ->
+  Interprocedural.Error.t list
+
 val report
   :  scheduler:Scheduler.t ->
   static_analysis_configuration:Configuration.StaticAnalysis.t ->
@@ -35,6 +43,6 @@ val report
   callables:Target.Set.t ->
   skipped_overrides:Target.t list ->
   model_verification_errors:ModelVerificationError.t list ->
-  fixpoint_timer:Timer.t ->
   fixpoint_state:Fixpoint.t ->
+  errors:Interprocedural.Error.t list ->
   Yojson.Safe.t list

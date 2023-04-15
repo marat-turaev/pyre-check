@@ -303,6 +303,17 @@ let purge_shared_memory ~environment ~qualifiers =
   ()
 
 
+let compact_ocaml_heap ~name =
+  let timer = Timer.start () in
+  let () = Log.info "Compacting OCaml heap at step: %s" name in
+  let original = Gc.get () in
+  Gc.set { original with space_overhead = 25; max_overhead = 52 };
+  Gc.compact ();
+  Gc.set original;
+  let name = Printf.sprintf "Compacted OCaml heap at step:: %s" name in
+  Statistics.performance ~name ~phase_name:name ~timer ()
+
+
 let run_taint_analysis
     ~static_analysis_configuration:
       ({
@@ -508,6 +519,8 @@ let run_taint_analysis
 
     let () = Cache.save cache in
 
+    compact_ocaml_heap ~name:"before_fixpoint";
+
     Log.info
       "Analysis fixpoint started for %d overrides and %d functions..."
       (List.length override_targets)
@@ -565,6 +578,17 @@ let run_taint_analysis
       ~timer
       ();
 
+    let errors =
+      Reporting.finish_fixpoint
+        ~scheduler
+        ~taint_configuration:taint_configuration_shared_memory
+        ~callables
+        ~fixpoint_timer
+        ~fixpoint_state
+    in
+
+    compact_ocaml_heap ~name:"before_reporting";
+
     let summary =
       Reporting.report
         ~scheduler
@@ -575,8 +599,8 @@ let run_taint_analysis
         ~callables
         ~skipped_overrides
         ~model_verification_errors
-        ~fixpoint_timer
         ~fixpoint_state
+        ~errors
     in
     Yojson.Safe.pretty_to_string (`List summary) |> Log.print "%s"
   with
