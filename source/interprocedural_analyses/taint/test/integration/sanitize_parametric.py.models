@@ -18,7 +18,12 @@
             "kinds": [
               {
                 "features": [ { "via": "tito" } ],
-                "leaves": [ { "name": "sanitize_parametric.a_source_y" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize_parametric.a_source_y"
+                  }
+                ],
                 "length": 1,
                 "kind": "TestA[Y]"
               }
@@ -43,7 +48,12 @@
             "kinds": [
               {
                 "features": [ { "via": "tito" } ],
-                "leaves": [ { "name": "sanitize_parametric.a_sink_x" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:x",
+                    "name": "sanitize_parametric.a_sink_x"
+                  }
+                ],
                 "length": 1,
                 "kind": "TestA[X]"
               }
@@ -143,7 +153,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize_parametric.a_sink_x" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:x",
+                    "name": "sanitize_parametric.a_sink_x"
+                  }
+                ],
                 "kind": "TestA[X]"
               }
             ],
@@ -157,7 +172,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize_parametric.a_sink_y" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:x",
+                    "name": "sanitize_parametric.a_sink_y"
+                  }
+                ],
                 "kind": "NotSource[TestA]@TestA[Y]"
               }
             ],
@@ -186,7 +206,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize_parametric.a_source_x" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize_parametric.a_source_x"
+                  }
+                ],
                 "kind": "NotSink[TestA]@TestA[X]"
               }
             ],
@@ -202,7 +227,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize_parametric.a_source_y" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize_parametric.a_source_y"
+                  }
+                ],
                 "kind": "TestA[Y]"
               }
             ],

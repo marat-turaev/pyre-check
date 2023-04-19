@@ -19,7 +19,10 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
-                  { "name": "cross_repository.returns_crtex_source" },
+                  {
+                    "port": "leaf:return",
+                    "name": "cross_repository.returns_crtex_source"
+                  },
                   {
                     "port": "producer:1:result",
                     "name": "crossRepositorySource"
@@ -45,7 +48,7 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_sink" } ],
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "kind": "Test"
               }
             ],
@@ -90,7 +93,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
                 "kind": "Test"
               }
             ],
@@ -110,10 +115,13 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "cross_repository.cross_repository_anchor_sink" },
                   {
                     "port": "anchor:formal(0)",
                     "name": "crossRepositoryAnchor"
+                  },
+                  {
+                    "port": "leaf:sink_parameter",
+                    "name": "cross_repository.cross_repository_anchor_sink"
                   }
                 ],
                 "kind": "Test"
@@ -247,7 +255,7 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_sink" } ],
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "kind": "Test"
               }
             ],
@@ -308,7 +316,7 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_sink" } ],
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "kind": "Test"
               }
             ],
@@ -405,7 +413,10 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
-                  { "name": "cross_repository.reaches_crtex_sink" },
+                  {
+                    "port": "leaf:x",
+                    "name": "cross_repository.reaches_crtex_sink"
+                  },
                   {
                     "port": "producer:1:formal(x)",
                     "name": "crossRepositorySink"
@@ -439,13 +450,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "crtex" } ],
-                "leaves": [
-                  { "name": "cross_repository.reaches_crtex_sink" },
-                  {
-                    "port": "producer:1:formal(x)",
-                    "name": "crossRepositorySink"
-                  }
-                ],
                 "length": 6,
                 "kind": "Test"
               }
@@ -481,7 +485,10 @@
               {
                 "features": [ { "always-via": "crtex" } ],
                 "leaves": [
-                  { "name": "cross_repository.returns_crtex_source" },
+                  {
+                    "port": "leaf:return",
+                    "name": "cross_repository.returns_crtex_source"
+                  },
                   {
                     "port": "producer:1:result",
                     "name": "crossRepositorySource"
@@ -515,13 +522,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "crtex" } ],
-                "leaves": [
-                  { "name": "cross_repository.returns_crtex_source" },
-                  {
-                    "port": "producer:1:result",
-                    "name": "crossRepositorySource"
-                  }
-                ],
                 "length": 4,
                 "kind": "UserControlled"
               }

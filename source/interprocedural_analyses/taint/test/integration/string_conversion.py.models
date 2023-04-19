@@ -17,7 +17,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -43,7 +48,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -90,7 +95,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -119,7 +129,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -171,7 +181,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -199,7 +214,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -251,7 +266,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -276,7 +296,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -327,7 +347,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -352,7 +377,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -398,7 +423,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -422,7 +452,12 @@
             "is_self_call": false,
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{string_conversion.C.g}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{string_conversion.C.g}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -447,7 +482,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -495,7 +530,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -521,7 +561,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -568,7 +608,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -597,7 +642,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -649,7 +694,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -673,7 +723,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -720,7 +770,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -744,7 +799,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -791,7 +846,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -815,7 +875,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -878,12 +938,7 @@
           {
             "caller_interval": [ { "lower": 14, "upper": 15 } ],
             "is_self_call": false,
-            "kinds": [
-              {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
-                "kind": "UserControlled"
-              }
-            ],
+            "kinds": [ { "kind": "UserControlled" } ],
             "local_features": [
               { "has": "first-index" }, { "first-index": "tainted" }
             ],
@@ -905,12 +960,7 @@
           {
             "caller_interval": [ { "lower": 14, "upper": 15 } ],
             "is_self_call": false,
-            "kinds": [
-              {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
-                "kind": "UserControlled"
-              }
-            ],
+            "kinds": [ { "kind": "UserControlled" } ],
             "local_features": [
               { "has": "first-index" }, { "first-index": "tainted" }
             ],
@@ -1060,7 +1110,12 @@
             "is_self_call": false,
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{string_conversion.C.g}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{string_conversion.C.g}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -1101,7 +1156,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
                 "kind": "Test"
               }
             ],
@@ -1134,7 +1191,12 @@
             "is_self_call": false,
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -1166,7 +1228,12 @@
             "is_self_call": false,
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -1346,7 +1413,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
                 "kind": "Test"
               }
             ],
@@ -1380,7 +1449,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "special_source" } ],
-                "leaves": [ { "name": "_test_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
                 "kind": "Test"
               }
             ],
@@ -1416,7 +1487,6 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -1452,7 +1522,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -1495,7 +1565,12 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{django.http.Request.GET}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -1520,7 +1595,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -1559,7 +1634,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -1601,7 +1676,12 @@
             "is_self_call": false,
             "kinds": [
               {
-                "leaves": [ { "name": "Obj{string_conversion.C.g}" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{string_conversion.C.g}"
+                  }
+                ],
                 "length": 1,
                 "kind": "UserControlled"
               }
@@ -1626,7 +1706,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "eval" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "eval" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -1661,13 +1741,7 @@
           {
             "receiver_interval": [ { "lower": 10, "upper": 11 } ],
             "is_self_call": false,
-            "kinds": [
-              {
-                "leaves": [ { "name": "Obj{string_conversion.C.g}" } ],
-                "length": 1,
-                "kind": "UserControlled"
-              }
-            ],
+            "kinds": [ { "length": 1, "kind": "UserControlled" } ],
             "local_features": [ { "always-via": "format-string" } ],
             "call": {
               "position": {
@@ -1733,7 +1807,6 @@
                 "features": [
                   { "has": "first-index" }, { "first-index": "tainted" }
                 ],
-                "leaves": [ { "name": "Obj{django.http.Request.GET}" } ],
                 "length": 1,
                 "kind": "UserControlled"
               }

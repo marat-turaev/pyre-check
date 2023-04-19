@@ -16,7 +16,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -33,7 +36,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "length": 2,
                 "kind": "NotSource[UserControlled]:Test"
               }
@@ -83,7 +86,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "length": 1,
                 "kind": "NotSink[SQL]:UserControlled"
               }
@@ -109,7 +114,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -150,7 +155,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -167,7 +175,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_sql" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
                 "length": 2,
                 "kind": "NotSource[UserControlled]:SQL"
               }
@@ -215,7 +223,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -233,7 +244,7 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_sql" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
                 "length": 1,
                 "kind": "NotSource[UserControlled]:SQL"
               }
@@ -282,7 +293,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "length": 2,
                 "kind": "NotSink[RemoteCodeExecution]:UserControlled"
               }
@@ -306,7 +319,12 @@
         "name": "backward",
         "roots": [
           {
-            "kinds": [ { "leaves": [ { "name": "_sql" } ], "kind": "SQL" } ],
+            "kinds": [
+              {
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
+                "kind": "SQL"
+              }
+            ],
             "origin": {
               "filename": "sanitize.py",
               "line": 760,
@@ -346,7 +364,9 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "length": 1,
                 "kind": "NotSink[SQL]:UserControlled"
               }
@@ -372,7 +392,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -419,7 +439,9 @@
                   { "first-field": "attribute" },
                   { "always-via": "tito" }
                 ],
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "length": 1,
                 "kind": "NotSink[TestA]:TestA"
               }
@@ -445,7 +467,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "TestB"
               }
             ],
@@ -491,7 +513,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.b_source" }
+                ],
                 "kind": "TestB"
               }
             ],
@@ -511,7 +535,7 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "length": 1,
                 "kind": "NotSource[TestA]:Test"
               }
@@ -561,7 +585,9 @@
             "kinds": [
               {
                 "features": [ { "via": "tito" } ],
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "length": 1,
                 "kind": "TestA"
               }
@@ -586,7 +612,7 @@
             "kinds": [
               {
                 "features": [ { "via": "tito" } ],
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "TestA"
               }
@@ -632,7 +658,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -649,7 +680,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "length": 1,
                 "kind": "TestB"
               }
@@ -695,7 +726,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -712,7 +748,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "length": 1,
                 "kind": "TestB"
               }
@@ -759,7 +795,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.b_source" }
+                ],
                 "kind": "TestB"
               }
             ],
@@ -783,7 +821,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -827,7 +868,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.b_source" }
+                ],
                 "kind": "TestB"
               }
             ],
@@ -851,7 +894,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -897,6 +943,7 @@
               {
                 "leaves": [
                   {
+                    "port": "leaf:return",
                     "name": "Obj{sanitize.C_sanitized_ab_sources.attribute}"
                   }
                 ],
@@ -917,7 +964,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -958,7 +1008,10 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "Obj{sanitize.C_sanitized_ab_sources.instance}" }
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{sanitize.C_sanitized_ab_sources.instance}"
+                  }
                 ],
                 "kind": "Test"
               }
@@ -977,7 +1030,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1016,7 +1072,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1034,7 +1095,10 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "Obj{sanitize.C_sanitized_all_sinks.attribute}" }
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{sanitize.C_sanitized_all_sinks.attribute}"
+                  }
                 ],
                 "kind": "Test"
               }
@@ -1075,7 +1139,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1093,7 +1162,10 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "Obj{sanitize.C_sanitized_all_sinks.instance}" }
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{sanitize.C_sanitized_all_sinks.instance}"
+                  }
                 ],
                 "kind": "Test"
               }
@@ -1134,7 +1206,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1151,7 +1228,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "TestA"
               }
@@ -1197,7 +1274,12 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_source" } ], "kind": "Test" }
+              {
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1214,7 +1296,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "TestA"
               }
@@ -1261,7 +1343,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "TestA"
               }
             ],
@@ -1285,7 +1369,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1329,7 +1416,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "TestA"
               }
             ],
@@ -1353,7 +1442,10 @@
         "roots": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -1397,7 +1489,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "TestA"
               }
             ],
@@ -1416,7 +1510,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "TestA"
               }
@@ -1806,7 +1900,10 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "Obj{sanitize.C_sanitized_all_sinks.instance}" }
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{sanitize.C_sanitized_all_sinks.instance}"
+                  }
                 ],
                 "kind": "Test"
               }
@@ -1824,7 +1921,10 @@
             "kinds": [
               {
                 "leaves": [
-                  { "name": "Obj{sanitize.C_sanitized_all_sinks.attribute}" }
+                  {
+                    "port": "leaf:return",
+                    "name": "Obj{sanitize.C_sanitized_all_sinks.attribute}"
+                  }
                 ],
                 "kind": "Test"
               }
@@ -2031,7 +2131,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "sanitize.a_source" } ],
                 "length": 1,
                 "kind": "NotSink[TestB]@NotSink[TestA]:TestA"
               }
@@ -2096,7 +2195,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "NotSource[TestB]@NotSource[TestA]:TestA"
               }
@@ -2132,7 +2230,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -2146,7 +2244,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "NotSource[TestA]@TestB"
               }
             ],
@@ -2175,7 +2273,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "NotSink[TestA]@TestA"
               }
             ],
@@ -2191,7 +2291,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_test_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_test_source" }
+                ],
                 "kind": "NotSink[TestA]:NotSink[TestB]@Test"
               }
             ],
@@ -2223,7 +2325,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -2237,7 +2339,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "NotSource[TestA]@TestA"
               }
             ],
@@ -2266,7 +2368,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "NotSink[TestA]@TestA"
               }
             ],
@@ -2282,7 +2386,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "TestA"
               }
             ],
@@ -2309,7 +2415,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "TestB"
               }
             ],
@@ -2338,7 +2444,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.b_source" }
+                ],
                 "kind": "TestB"
               }
             ],
@@ -2366,7 +2474,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "local_features": [ { "always-via": "tito" } ],
             "tito_positions": [ { "line": 828, "start": 59, "end": 60 } ],
@@ -2392,7 +2503,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "local_features": [ { "always-via": "tito" } ],
             "tito_positions": [ { "line": 628, "start": 54, "end": 55 } ],
@@ -2419,7 +2533,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "NotSource[Cookies]@RemoteCodeExecution"
               }
             ],
@@ -2448,7 +2562,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -2477,7 +2591,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -2506,7 +2620,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "NotSink[TestA]@TestA"
               }
             ],
@@ -2535,7 +2651,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "NotSource[TestA]@TestA"
               }
             ],
@@ -2588,11 +2704,7 @@
         "taint": [
           {
             "kinds": [
-              {
-                "leaves": [ { "name": "_test_sink" } ],
-                "length": 1,
-                "kind": "NotSource[UserControlled]:Test"
-              }
+              { "length": 1, "kind": "NotSource[UserControlled]:Test" }
             ],
             "call": {
               "position": {
@@ -2665,7 +2777,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "NotSink[SQL]@UserControlled"
               }
             ],
@@ -2693,11 +2807,7 @@
         "taint": [
           {
             "kinds": [
-              {
-                "leaves": [ { "name": "_sql" } ],
-                "length": 1,
-                "kind": "NotSource[UserControlled]:SQL"
-              }
+              { "length": 1, "kind": "NotSource[UserControlled]:SQL" }
             ],
             "call": {
               "position": {
@@ -2718,13 +2828,7 @@
         "port": "formal(a)",
         "taint": [
           {
-            "kinds": [
-              {
-                "leaves": [ { "name": "_rce" } ],
-                "length": 1,
-                "kind": "RemoteCodeExecution"
-              }
-            ],
+            "kinds": [ { "length": 1, "kind": "RemoteCodeExecution" } ],
             "call": {
               "position": {
                 "filename": "sanitize.py",
@@ -2796,7 +2900,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_sql" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
                 "kind": "NotSource[UserControlled]@SQL"
               }
             ],
@@ -2825,7 +2929,6 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
                 "length": 1,
                 "kind": "NotSink[RemoteCodeExecution]:UserControlled"
               }
@@ -2882,7 +2985,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "NotSink[SQL]@UserControlled"
               }
             ],
@@ -2911,7 +3016,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "NotSink[SQL]@UserControlled"
               }
             ],
@@ -2940,7 +3047,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_sql" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
                 "kind": "NotSource[UserControlled]@SQL"
               }
             ],
@@ -2969,7 +3076,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "NotSink[SQL]@UserControlled"
               }
             ],
@@ -3023,7 +3132,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "TestB"
               }
             ],
@@ -3051,7 +3160,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "TestB"
               }
             ],
@@ -3078,7 +3187,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "NotSink[TestA]@TestA"
               }
             ],
@@ -3111,7 +3222,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.b_sink" } ],
                 "kind": "TestB"
               }
             ],
@@ -3184,7 +3295,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -3228,7 +3339,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3248,7 +3364,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3282,7 +3403,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3302,7 +3428,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3324,7 +3455,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -3340,7 +3474,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -3389,7 +3526,12 @@
         "port": "formal(x)",
         "taint": [
           {
-            "kinds": [ { "leaves": [ { "name": "_sql" } ], "kind": "SQL" } ],
+            "kinds": [
+              {
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
+                "kind": "SQL"
+              }
+            ],
             "origin": {
               "filename": "sanitize.py",
               "line": 809,
@@ -3430,7 +3572,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -3497,7 +3639,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "kind": "NotSource[UserControlled]@Test"
               }
             ],
@@ -3593,7 +3735,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -3621,7 +3763,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -3648,7 +3790,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_sink" } ],
+                "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "kind": "TestA"
               }
             ],
@@ -3721,7 +3863,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3741,7 +3888,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3763,7 +3915,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -3821,7 +3976,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3841,7 +4001,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -3863,7 +4028,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -3879,7 +4047,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -3930,7 +4101,12 @@
         "port": "formal(x)",
         "taint": [
           {
-            "kinds": [ { "leaves": [ { "name": "_sql" } ], "kind": "SQL" } ],
+            "kinds": [
+              {
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
+                "kind": "SQL"
+              }
+            ],
             "origin": {
               "filename": "sanitize.py",
               "line": 606,
@@ -3973,7 +4149,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -4049,7 +4225,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "RemoteCodeExecution"
               }
             ],
@@ -4068,7 +4244,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_sql" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_sql" } ],
                 "kind": "NotSource[UserControlled]@SQL"
               }
             ],
@@ -4169,7 +4345,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -4202,7 +4381,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "UserControlled"
               }
             ],
@@ -4230,7 +4411,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_user_controlled" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "_user_controlled" }
+                ],
                 "kind": "NotSink[RemoteCodeExecution]@UserControlled"
               }
             ],
@@ -4282,7 +4465,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_cookies" } ], "kind": "Cookies" }
+              {
+                "leaves": [ { "port": "leaf:return", "name": "_cookies" } ],
+                "kind": "Cookies"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -4380,7 +4566,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -4426,7 +4617,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -4471,7 +4665,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.b_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.b_source" }
+                ],
                 "kind": "TestB"
               }
             ],
@@ -4499,7 +4695,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_test_sink" } ],
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
                 "kind": "NotSource[TestA]@Test"
               }
             ],
@@ -4553,7 +4749,9 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.a_source" } ],
+                "leaves": [
+                  { "port": "leaf:return", "name": "sanitize.a_source" }
+                ],
                 "kind": "TestA"
               }
             ],
@@ -4604,7 +4802,12 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "sanitize.source_with_tito" } ],
+                "leaves": [
+                  {
+                    "port": "leaf:return",
+                    "name": "sanitize.source_with_tito"
+                  }
+                ],
                 "kind": "Test"
               }
             ],
@@ -4624,7 +4827,10 @@
         "taint": [
           {
             "kinds": [
-              { "leaves": [ { "name": "_test_sink" } ], "kind": "Test" }
+              {
+                "leaves": [ { "port": "leaf:arg", "name": "_test_sink" } ],
+                "kind": "Test"
+              }
             ],
             "origin": {
               "filename": "sanitize.py",
@@ -4676,7 +4882,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "NotSource[TestA]@RemoteCodeExecution"
               }
             ],
@@ -4706,7 +4912,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_rce" } ],
                 "length": 1,
                 "kind": "NotSource[TestB]@NotSource[TestA]:RemoteCodeExecution"
               }
@@ -4741,7 +4946,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_rce" } ],
                 "length": 2,
                 "kind": "NotSource[Test]@NotSource[TestB]:NotSource[TestA]:RemoteCodeExecution"
               }
@@ -4775,7 +4979,7 @@
           {
             "kinds": [
               {
-                "leaves": [ { "name": "_rce" } ],
+                "leaves": [ { "port": "leaf:argument", "name": "_rce" } ],
                 "kind": "NotSource[TestB]@RemoteCodeExecution"
               }
             ],
@@ -4805,7 +5009,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_rce" } ],
                 "length": 1,
                 "kind": "NotSource[TestA]@NotSource[TestB]:RemoteCodeExecution"
               }
@@ -4840,7 +5043,6 @@
             "kinds": [
               {
                 "features": [ { "always-via": "tito" } ],
-                "leaves": [ { "name": "_rce" } ],
                 "length": 2,
                 "kind": "NotSource[Test]@NotSource[TestA]:NotSource[TestB]:RemoteCodeExecution"
               }
