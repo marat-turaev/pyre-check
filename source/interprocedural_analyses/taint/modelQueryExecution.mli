@@ -50,7 +50,7 @@ module PartitionCacheQueries : sig
 end
 
 module ReadWriteCache : sig
-  type t [@@deriving show, equal]
+  type t [@@deriving equal]
 
   val empty : t
 

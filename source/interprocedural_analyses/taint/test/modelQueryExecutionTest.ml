@@ -4598,11 +4598,7 @@ let test_generated_cache context =
           ModelQueryExecution.ReadWriteCache.write cache ~kind ~name ~target)
         expected
     in
-    assert_equal
-      ~cmp:ModelQueryExecution.ReadWriteCache.equal
-      ~printer:ModelQueryExecution.ReadWriteCache.show
-      expected
-      actual
+    assert_equal ~cmp:ModelQueryExecution.ReadWriteCache.equal expected actual
   in
   assert_generated_cache
     ~source:{|

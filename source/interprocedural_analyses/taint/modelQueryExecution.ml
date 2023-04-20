@@ -12,7 +12,6 @@
  *)
 
 open Core
-open Data_structures
 open Pyre
 open Ast
 open Analysis
@@ -29,7 +28,7 @@ module ModelQueryRegistryMap = struct
     if not (Registry.is_empty registry) then
       String.Map.update model_query_map model_query_identifier ~f:(function
           | None -> registry
-          | Some existing -> Registry.merge ~join:Model.join_user_models existing registry)
+          | Some existing -> Registry.merge_skewed ~join:Model.join_user_models existing registry)
     else
       model_query_map
 
@@ -38,7 +37,7 @@ module ModelQueryRegistryMap = struct
 
   let merge ~model_join left right =
     String.Map.merge left right ~f:(fun ~key:_ -> function
-      | `Both (models1, models2) -> Some (Registry.merge ~join:model_join models1 models2)
+      | `Both (models1, models2) -> Some (Registry.merge_skewed ~join:model_join models1 models2)
       | `Left models
       | `Right models ->
           Some models)
@@ -852,50 +851,40 @@ end
 (* This is the cache for `WriteToCache` and `read_from_cache` *)
 module ReadWriteCache = struct
   module NameToTargetSet = struct
-    type t = Target.Set.t SerializableStringMap.t
+    type t = Target.Set.t String.Map.t
 
-    let empty = SerializableStringMap.empty
-
-    let singleton ~name ~target =
-      SerializableStringMap.add name (Target.Set.singleton target) SerializableStringMap.empty
-
+    let empty = String.Map.empty
 
     let write map ~name ~target =
-      SerializableStringMap.update
-        name
-        (function
-          | None -> Some (Target.Set.singleton target)
-          | Some targets -> Some (Target.Set.add target targets))
-        map
+      String.Map.update map name ~f:(function
+          | None -> Target.Set.singleton target
+          | Some targets -> Target.Set.add target targets)
 
 
-    let read map ~name =
-      SerializableStringMap.find_opt name map |> Option.value ~default:Target.Set.empty
+    let singleton ~name ~target = write empty ~name ~target
 
+    let read map ~name = String.Map.find map name |> Option.value ~default:Target.Set.empty
 
-    let merge = SerializableStringMap.merge (fun _ -> Option.merge ~f:Target.Set.union)
+    let merge_skewed = String.Map.merge_skewed ~combine:(fun ~key:_ -> Target.Set.union)
   end
 
-  type t = NameToTargetSet.t SerializableStringMap.t
+  type t = NameToTargetSet.t String.Map.t
 
-  let empty = SerializableStringMap.empty
+  let empty = String.Map.empty
 
   let write map ~kind ~name ~target =
-    SerializableStringMap.update
-      kind
-      (function
-        | None -> Some (NameToTargetSet.singleton ~name ~target)
-        | Some name_targets -> Some (NameToTargetSet.write name_targets ~name ~target))
-      map
+    String.Map.update map kind ~f:(function
+        | None -> NameToTargetSet.singleton ~name ~target
+        | Some name_targets -> NameToTargetSet.write name_targets ~name ~target)
 
 
   let read map ~kind ~name =
-    SerializableStringMap.find_opt kind map
+    String.Map.find map kind
     |> Option.value ~default:NameToTargetSet.empty
     |> NameToTargetSet.read ~name
 
 
-  let merge = SerializableStringMap.merge (fun _ -> Option.merge ~f:NameToTargetSet.merge)
+  let merge_skewed = String.Map.merge_skewed ~combine:(fun ~key:_ -> NameToTargetSet.merge_skewed)
 
   let show_set set =
     set
@@ -905,13 +894,7 @@ module ReadWriteCache = struct
     |> Format.sprintf "{%s}"
 
 
-  let pp_set formatter set = Format.fprintf formatter "%s" (show_set set)
-
-  let pp = SerializableStringMap.pp (SerializableStringMap.pp pp_set)
-
-  let show = Format.asprintf "%a" pp
-
-  let equal = SerializableStringMap.equal (SerializableStringMap.equal Target.Set.equal)
+  let equal = String.Map.equal (String.Map.equal Target.Set.equal)
 end
 
 module CandidateTargetsFromCache = struct
@@ -1208,7 +1191,7 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
             ~class_hierarchy_graph
             ~targets
             write_to_cache_queries
-          |> ReadWriteCache.merge cache
+          |> ReadWriteCache.merge_skewed cache
         in
         Scheduler.map_reduce
           scheduler
@@ -1220,7 +1203,7 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
                ())
           ~initial:ReadWriteCache.empty
           ~map
-          ~reduce:ReadWriteCache.merge
+          ~reduce:ReadWriteCache.merge_skewed
           ~inputs:targets
           ()
 
