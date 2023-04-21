@@ -120,20 +120,24 @@ let fetch_and_externalize
     ~fixpoint_state
     ~filename_lookup
     ~override_graph
-    callable
-  =
-  let model =
-    Fixpoint.get_model fixpoint_state callable |> Option.value ~default:Model.empty_model
-  in
-  let result = Fixpoint.get_result fixpoint_state callable |> IssueHandle.SerializableMap.data in
-  externalize
-    ~taint_configuration
-    ~fixpoint_state
-    ~filename_lookup
-    ~override_graph
-    callable
-    result
-    model
+    ~dump_override_models
+  = function
+  | Target.Override _ when not dump_override_models -> []
+  | callable ->
+      let model =
+        Fixpoint.get_model fixpoint_state callable |> Option.value ~default:Model.empty_model
+      in
+      let result =
+        Fixpoint.get_result fixpoint_state callable |> IssueHandle.SerializableMap.data
+      in
+      externalize
+        ~taint_configuration
+        ~fixpoint_state
+        ~filename_lookup
+        ~override_graph
+        callable
+        result
+        model
 
 
 let emit_externalization
@@ -149,6 +153,7 @@ let emit_externalization
     ~fixpoint_state
     ~filename_lookup
     ~override_graph
+    ~dump_override_models:false
     callable
   |> List.iter ~f:emitter
 
