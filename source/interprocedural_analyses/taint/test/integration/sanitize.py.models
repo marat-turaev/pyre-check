@@ -584,7 +584,6 @@
           {
             "kinds": [
               {
-                "features": [ { "via": "tito" } ],
                 "leaves": [
                   { "port": "leaf:return", "name": "sanitize.a_source" }
                 ],
@@ -611,7 +610,6 @@
           {
             "kinds": [
               {
-                "features": [ { "via": "tito" } ],
                 "leaves": [ { "port": "leaf:x", "name": "sanitize.a_sink" } ],
                 "length": 1,
                 "kind": "TestA"
@@ -631,7 +629,7 @@
         ]
       }
     ],
-    "features": [ { "via": "tito" } ],
+    "features": [],
     "sink_handle": {
       "kind": "Call",
       "callee": "sanitize.partial_issue_sinks",

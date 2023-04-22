@@ -63,7 +63,7 @@ let parse_tito ~allowed_transforms ?subkind name =
       >>= fun transform ->
       Ok
         (Sinks.make_transform
-           ~local:[transform]
-           ~global:TaintTransforms.empty
+           ~local:TaintTransforms.empty
+           ~global:[transform]
            ~base:Sinks.LocalReturn)
   | name, _ -> Error (Format.sprintf "Unsupported taint in taint out specification `%s`" name)

@@ -17,7 +17,6 @@
           {
             "kinds": [
               {
-                "features": [ { "via": "tito" } ],
                 "leaves": [
                   {
                     "port": "leaf:return",
@@ -47,7 +46,6 @@
           {
             "kinds": [
               {
-                "features": [ { "via": "tito" } ],
                 "leaves": [
                   {
                     "port": "leaf:x",
@@ -72,7 +70,7 @@
         ]
       }
     ],
-    "features": [ { "via": "tito" } ],
+    "features": [],
     "sink_handle": {
       "kind": "Call",
       "callee": "sanitize_parametric.partial_issue_sinks",

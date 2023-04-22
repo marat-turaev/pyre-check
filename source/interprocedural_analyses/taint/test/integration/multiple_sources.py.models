@@ -1455,7 +1455,7 @@
         "port": "formal(arg)",
         "taint": [
           {
-            "kinds": [ { "kind": "TransformT@ExtraTraceSink" } ],
+            "kinds": [ { "kind": "TransformT:ExtraTraceSink" } ],
             "declaration": null
           }
         ]
@@ -1467,7 +1467,7 @@
         "taint": [
           {
             "kinds": [
-              { "return_paths": { "": 0 }, "kind": "TransformT@LocalReturn" }
+              { "return_paths": { "": 0 }, "kind": "TransformT:LocalReturn" }
             ],
             "tito": null
           }

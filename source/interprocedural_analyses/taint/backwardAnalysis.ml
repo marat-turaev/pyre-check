@@ -418,7 +418,8 @@ module State (FunctionContext : FUNCTION_CONTEXT) = struct
       in
       let taint_to_propagate =
         match kind with
-        | Sinks.Transform { local = transforms; global; _ } when TaintTransforms.is_empty global ->
+        | Sinks.Transform { local; global; _ } ->
+            let transforms = local @ global in
             (* Apply tito transforms and source- and sink-specific sanitizers. *)
             let taint_to_propagate =
               BackwardState.Tree.apply_transforms
@@ -445,7 +446,6 @@ module State (FunctionContext : FUNCTION_CONTEXT) = struct
                 ~sink_trees
                 ~tito_roots
                 taint_to_propagate
-        | Sinks.Transform _ -> failwith "unexpected non-empty `global` transforms in tito"
         | _ -> taint_to_propagate
       in
       let transform_existing_tito ~callee_collapse_depth kind frame =

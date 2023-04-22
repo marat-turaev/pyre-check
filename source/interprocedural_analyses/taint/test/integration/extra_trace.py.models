@@ -692,7 +692,7 @@
         "port": "formal(arg)",
         "taint": [
           {
-            "kinds": [ { "kind": "TransformX@ExtraTraceSink" } ],
+            "kinds": [ { "kind": "TransformX:ExtraTraceSink" } ],
             "declaration": null
           }
         ]
@@ -704,7 +704,7 @@
         "taint": [
           {
             "kinds": [
-              { "return_paths": { "": 0 }, "kind": "TransformX@LocalReturn" }
+              { "return_paths": { "": 0 }, "kind": "TransformX:LocalReturn" }
             ],
             "tito": null
           }
@@ -722,7 +722,7 @@
         "port": "formal(arg)",
         "taint": [
           {
-            "kinds": [ { "kind": "TransformY@ExtraTraceSink" } ],
+            "kinds": [ { "kind": "TransformY:ExtraTraceSink" } ],
             "declaration": null
           }
         ]
@@ -734,7 +734,7 @@
         "taint": [
           {
             "kinds": [
-              { "return_paths": { "": 0 }, "kind": "TransformY@LocalReturn" }
+              { "return_paths": { "": 0 }, "kind": "TransformY:LocalReturn" }
             ],
             "tito": null
           }
@@ -840,7 +840,7 @@
         "port": "formal(arg)",
         "taint": [
           {
-            "kinds": [ { "kind": "TransformZ@ExtraTraceSink" } ],
+            "kinds": [ { "kind": "TransformZ:ExtraTraceSink" } ],
             "declaration": null
           }
         ]
@@ -852,7 +852,7 @@
         "taint": [
           {
             "kinds": [
-              { "return_paths": { "": 0 }, "kind": "TransformZ@LocalReturn" }
+              { "return_paths": { "": 0 }, "kind": "TransformZ:LocalReturn" }
             ],
             "tito": null
           }
