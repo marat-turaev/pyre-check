@@ -325,7 +325,11 @@ module Make (Analysis : ANALYSIS) = struct
          separately. *)
       let () = SharedModels.add callable state.model in
       (* Separate storing callsite model to look up smaller model at callsites *)
-      let callsite_model = state.model |> Model.strip_for_callsite in
+      let callsite_model =
+        match callable with
+        | Target.Override _ -> state.model
+        | _ -> state.model |> Model.strip_for_callsite
+      in
       let () = SharedCallsiteModels.add callable callsite_model in
       (* Skip result writing unless necessary (e.g. overrides don't have results) *)
       let () =
