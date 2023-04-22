@@ -566,6 +566,8 @@ module type TAINT_DOMAIN = sig
     t ->
     t
 
+  val strip_for_callsite : t -> t
+
   (* Add trace info at call-site *)
   val apply_call
     :  resolution:Analysis.Resolution.t ->
@@ -1131,37 +1133,13 @@ end = struct
         taint
 
 
-  let apply_call
-      ~resolution
-      ~location
-      ~callee
-      ~arguments
-      ~port
-      ~path
-      ~element:taint
-      ~is_self_call
-      ~caller_class_interval
-      ~receiver_class_interval
-    =
-    let callees =
-      match callee with
-      | Some callee -> [callee]
-      | None -> []
-    in
-    let apply (call_info, local_taint) =
+  let strip_for_callsite taint =
+    let strip (call_info, local_taint) =
       let local_taint =
         local_taint
         |> LocalTaintDomain.transform KindTaintDomain.Key Filter ~f:(fun kind ->
                not (Kind.ignore_kind_at_call kind))
         |> LocalTaintDomain.transform KindTaintDomain.Key Map ~f:Kind.apply_call
-      in
-      let via_features_breadcrumbs =
-        LocalTaintDomain.fold
-          Features.ViaFeatureSet.Element
-          ~f:Features.ViaFeatureSet.add
-          ~init:Features.ViaFeatureSet.bottom
-          local_taint
-        |> Features.expand_via_features ~resolution ~callees ~arguments
       in
       let local_breadcrumbs = LocalTaintDomain.get LocalTaintDomain.Slots.Breadcrumb local_taint in
       let local_first_indices =
@@ -1173,7 +1151,7 @@ end = struct
         |> LocalTaintDomain.update
              LocalTaintDomain.Slots.TitoPosition
              Features.TitoPositionSet.bottom
-        |> LocalTaintDomain.update LocalTaintDomain.Slots.Breadcrumb via_features_breadcrumbs
+        |> LocalTaintDomain.update LocalTaintDomain.Slots.Breadcrumb Features.BreadcrumbSet.bottom
         |> LocalTaintDomain.update LocalTaintDomain.Slots.FirstIndex Features.FirstIndexSet.bottom
         |> LocalTaintDomain.update LocalTaintDomain.Slots.FirstField Features.FirstFieldSet.bottom
       in
@@ -1192,19 +1170,48 @@ end = struct
       in
       let apply_frame frame =
         frame
-        |> Frame.update Frame.Slots.ViaFeature Features.ViaFeatureSet.bottom
-        |> Frame.transform
-             Features.BreadcrumbSet.Self
-             Map
-             ~f:(Features.BreadcrumbSet.sequence_join local_breadcrumbs)
-        |> Frame.transform
-             Features.FirstIndexSet.Self
-             Map
-             ~f:(Features.FirstIndexSet.sequence_join local_first_indices)
-        |> Frame.transform
-             Features.FirstFieldSet.Self
-             Map
-             ~f:(Features.FirstFieldSet.sequence_join local_first_fields)
+        |> Frame.transform Features.BreadcrumbSet.Self Add ~f:local_breadcrumbs
+        |> Frame.transform Features.FirstIndexSet.Self Add ~f:local_first_indices
+        |> Frame.transform Features.FirstFieldSet.Self Add ~f:local_first_fields
+      in
+      let local_taint = LocalTaintDomain.transform Frame.Self Map ~f:apply_frame local_taint in
+      CallInfo.strip_for_callsite call_info, local_taint
+    in
+    Map.transform Map.KeyValue Map ~f:strip taint
+
+
+  let apply_call
+      ~resolution
+      ~location
+      ~callee
+      ~arguments
+      ~port
+      ~path
+      ~element:taint
+      ~is_self_call
+      ~caller_class_interval
+      ~receiver_class_interval
+    =
+    let callees =
+      match callee with
+      | Some callee -> [callee]
+      | None -> []
+    in
+    let apply (call_info, local_taint) =
+      let via_features_breadcrumbs =
+        LocalTaintDomain.fold
+          Features.ViaFeatureSet.Element
+          ~f:Features.ViaFeatureSet.add
+          ~init:Features.ViaFeatureSet.bottom
+          local_taint
+        |> Features.expand_via_features ~resolution ~callees ~arguments
+      in
+      let local_taint =
+        local_taint
+        |> LocalTaintDomain.update LocalTaintDomain.Slots.Breadcrumb via_features_breadcrumbs
+      in
+      let apply_frame frame =
+        frame |> Frame.update Frame.Slots.ViaFeature Features.ViaFeatureSet.bottom
       in
       let local_taint = LocalTaintDomain.transform Frame.Self Map ~f:apply_frame local_taint in
       let local_taint =

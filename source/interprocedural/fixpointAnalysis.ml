@@ -279,7 +279,11 @@ module Make (Analysis : ANALYSIS) = struct
       | None -> get_old_model callable
 
 
-    let get_callsite_model callable = SharedCallsiteModels.get callable
+    let get_callsite_model callable =
+      match SharedCallsiteModels.get callable with
+      | Some _ as model -> model
+      | None -> SharedCallsiteModels.get_old callable
+
 
     let get_result callable = SharedResults.get callable |> Option.value ~default:Result.empty
 
@@ -344,6 +348,7 @@ module Make (Analysis : ANALYSIS) = struct
 
     let oldify callable_set =
       SharedModels.oldify_batch callable_set;
+      SharedCallsiteModels.oldify_batch callable_set;
       SharedFixpoint.oldify_batch callable_set;
 
       (* Old results are never looked up, so remove them. *)
@@ -352,6 +357,7 @@ module Make (Analysis : ANALYSIS) = struct
 
     let remove_old callable_set =
       SharedModels.remove_old_batch callable_set;
+      SharedCallsiteModels.remove_old_batch callable_set;
       SharedFixpoint.remove_old_batch callable_set
 
 

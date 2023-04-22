@@ -401,6 +401,8 @@
               {
                 "features": [
                   { "has": "first-index" },
+                  { "first-index": "c" },
+                  { "first-index": "d" },
                   { "first-index": "b" },
                   { "first-index": "a" },
                   { "always-via": "special_source" }

@@ -389,22 +389,14 @@ let strip_for_callsite
   =
   (* Remove positions and other info that are not needed at call site *)
   let source_taint =
-    source_taint
-    |> ForwardState.transform Features.TitoPositionSet.Self Map ~f:(fun _ ->
-           Features.TitoPositionSet.bottom)
-    |> ForwardState.transform ForwardTaint.call_info Map ~f:CallInfo.strip_for_callsite
+    source_taint |> ForwardState.transform ForwardTaint.Self Map ~f:ForwardTaint.strip_for_callsite
   in
   let sink_taint =
-    sink_taint
-    |> BackwardState.transform Features.TitoPositionSet.Self Map ~f:(fun _ ->
-           Features.TitoPositionSet.bottom)
-    |> BackwardState.transform BackwardTaint.call_info Map ~f:CallInfo.strip_for_callsite
+    sink_taint |> BackwardState.transform BackwardTaint.Self Map ~f:BackwardTaint.strip_for_callsite
   in
   let taint_in_taint_out =
     taint_in_taint_out
-    |> BackwardState.transform Features.TitoPositionSet.Self Map ~f:(fun _ ->
-           Features.TitoPositionSet.bottom)
-    |> BackwardState.transform BackwardTaint.call_info Map ~f:CallInfo.strip_for_callsite
+    |> BackwardState.transform BackwardTaint.Self Map ~f:BackwardTaint.strip_for_callsite
   in
   { forward = { source_taint }; backward = { sink_taint; taint_in_taint_out }; sanitizers; modes }
 
