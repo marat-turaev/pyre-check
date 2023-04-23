@@ -2168,7 +2168,7 @@
               {
                 "features": [
                   { "always-via": "special_sink" },
-                  { "via": "string_concat_lhs" },
+                  { "via": "obscure:model" },
                   { "always-via": "tito" }
                 ],
                 "length": 2,
@@ -2238,7 +2238,7 @@
               }
             ],
             "local_features": [
-              { "via": "string_concat_lhs" }, { "always-via": "tito" }
+              { "via": "obscure:model" }, { "always-via": "tito" }
             ],
             "tito_positions": [ { "line": 95, "start": 17, "end": 18 } ],
             "call": {
@@ -2285,7 +2285,7 @@
               }
             ],
             "local_features": [
-              { "via": "string_concat_rhs" }, { "always-via": "tito" }
+              { "via": "obscure:model" }, { "always-via": "tito" }
             ],
             "tito_positions": [ { "line": 95, "start": 21, "end": 35 } ],
             "origin": {
@@ -2328,7 +2328,7 @@
     "features": [
       { "always-via": "special_source" },
       { "always-via": "special_sink" },
-      { "via": "string_concat_rhs" },
+      { "via": "obscure:model" },
       { "always-via": "tito" }
     ],
     "sink_handle": {

@@ -382,6 +382,28 @@
     "callable": "access_path.SpecialDict.__getitem__",
     "tito": [
       {
+        "port": "formal(key)",
+        "taint": [
+          {
+            "kinds": [
+              {
+                "return_paths": { "": 0 },
+                "length": 1,
+                "kind": "LocalReturn"
+              }
+            ],
+            "local_features": [
+              { "has": "first-index" },
+              { "first-index": "<unknown>" },
+              { "always-via": "obscure:model" },
+              { "always-via": "tito" }
+            ],
+            "tito_positions": [ { "line": 22, "start": 29, "end": 32 } ],
+            "tito": null
+          }
+        ]
+      },
+      {
         "port": "formal(self)[dict]",
         "taint": [
           {
@@ -395,6 +417,7 @@
             "local_features": [
               { "has": "first-index" },
               { "first-index": "<unknown>" },
+              { "always-via": "obscure:model" },
               { "always-via": "tito" }
             ],
             "tito_positions": [ { "line": 22, "start": 15, "end": 24 } ],
