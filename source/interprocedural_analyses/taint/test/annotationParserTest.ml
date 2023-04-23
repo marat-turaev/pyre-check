@@ -94,8 +94,8 @@ let test_parse_tito _ =
     ~expected:
       (Sinks.Transform
          {
-           local = TaintTransforms.of_named_transforms [TaintTransform.Named "T"];
-           global = TaintTransforms.empty;
+           local = TaintTransforms.empty;
+           global = TaintTransforms.of_named_transforms [TaintTransform.Named "T"];
            base = Sinks.LocalReturn;
          })
     ~subkind:"T"

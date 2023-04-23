@@ -80,7 +80,7 @@ let assert_taint ?models ?models_source ~context source expect =
         ~define
         ~cfg
         ~call_graph_of_define
-        ~get_callee_model:(Registry.get models)
+        ~get_callee_model:(fun target -> Registry.get models target >>| Model.strip_for_callsite)
         ~existing_model:Model.empty_model
         ()
     in

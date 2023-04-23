@@ -2213,9 +2213,9 @@ let test_taint_in_taint_out_transform context =
                   [
                     Sinks.Transform
                       {
-                        local =
+                        local = TaintTransforms.empty;
+                        global =
                           TaintTransforms.of_named_transforms [TaintTransform.Named "TestTransform"];
-                        global = TaintTransforms.empty;
                         base = Sinks.LocalReturn;
                       };
                   ];
@@ -2229,9 +2229,9 @@ let test_taint_in_taint_out_transform context =
                   [
                     Sinks.Transform
                       {
-                        local =
+                        local = TaintTransforms.empty;
+                        global =
                           TaintTransforms.of_named_transforms [TaintTransform.Named "TestTransform"];
-                        global = TaintTransforms.empty;
                         base = Sinks.ExtraTraceSink;
                       };
                   ];

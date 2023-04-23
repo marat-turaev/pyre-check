@@ -54,7 +54,7 @@ let assert_taint ~context source expected =
         ~define
         ~cfg
         ~call_graph_of_define
-        ~get_callee_model:(Registry.get models)
+        ~get_callee_model:(fun target -> Registry.get models target >>| Model.strip_for_callsite)
         ~existing_model:Model.empty_model
         ~triggered_sinks:(Issue.TriggeredSinkLocationMap.create ())
         ()
