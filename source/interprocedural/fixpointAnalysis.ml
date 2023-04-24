@@ -206,7 +206,7 @@ module Make (Analysis : ANALYSIS) = struct
   (* The fixpoint state, stored in shared memory. *)
   module State = struct
     module SharedModels =
-      Memory.WithCache.Make
+      Memory.NoCache.Make
         (Target.SharedMemoryKey)
         (struct
           type t = Model.t
@@ -228,7 +228,7 @@ module Make (Analysis : ANALYSIS) = struct
         end)
 
     module SharedResults =
-      Memory.WithCache.Make
+      Memory.NoCache.Make
         (Target.SharedMemoryKey)
         (struct
           type t = Result.t
@@ -273,11 +273,7 @@ module Make (Analysis : ANALYSIS) = struct
 
     let get_old_model callable = SharedModels.get_old callable
 
-    let get_model callable =
-      match get_new_model callable with
-      | Some _ as model -> model
-      | None -> get_old_model callable
-
+    let get_model callable = get_new_model callable
 
     let get_callsite_model callable =
       match SharedCallsiteModels.get callable with
@@ -377,6 +373,11 @@ module Make (Analysis : ANALYSIS) = struct
     let clear_results () =
       let targets = targets () in
       SharedResults.remove_batch targets
+
+
+    let clear_callsite_models () =
+      let targets = targets () in
+      SharedCallsiteModels.remove_batch targets
 
 
     (** Remove the fixpoint state from the shared memory. This must be called before computing
@@ -681,6 +682,7 @@ module Make (Analysis : ANALYSIS) = struct
     in
     try
       let iterations = iterate ~iteration:0 initial_callables_to_analyze in
+      let () = State.clear_callsite_models () in
       FixpointReached { iterations }
     with
     | exn ->
