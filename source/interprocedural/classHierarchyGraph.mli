@@ -51,7 +51,9 @@ end
 module SharedMemory : sig
   type t
 
-  val from_heap : Heap.t -> t
+  val from_heap : transitive:class_name list -> Heap.t -> t
 
   val get : t -> class_name:class_name -> ClassNameSet.t
+
+  val get_transitive : t -> class_name:class_name -> ClassNameSet.t option
 end

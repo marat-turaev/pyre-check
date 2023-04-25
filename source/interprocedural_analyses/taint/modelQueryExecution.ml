@@ -329,10 +329,8 @@ end = struct
     List.find_map !results ~f:(fun name_match -> Re2.Match.get ~sub:(`Name identifier) name_match)
 end
 
-let chilren_cache = ref String.Map.empty
-
-let find_children ~cache ~class_hierarchy_graph ~is_transitive ~includes_self class_name =
-  let rec find_children_aux to_process acc =
+let find_children ~class_hierarchy_graph ~is_transitive ~includes_self class_name =
+  let rec find_children_transitive ~class_hierarchy_graph to_process acc =
     match to_process with
     | [] -> acc
     | class_name :: rest ->
@@ -340,35 +338,23 @@ let find_children ~cache ~class_hierarchy_graph ~is_transitive ~includes_self cl
           ClassHierarchyGraph.SharedMemory.get ~class_name class_hierarchy_graph
         in
         let new_children = ClassHierarchyGraph.ClassNameSet.elements child_name_set in
-        let acc, new_children =
-          List.fold
-            ~f:(fun (acc, new_children) new_child ->
-              (* ? graph of children seems to be cyclic w/o this check *)
-              if ClassHierarchyGraph.ClassNameSet.mem new_child acc then
-                acc, new_children
-              else
-                ClassHierarchyGraph.ClassNameSet.add new_child acc, new_child :: new_children)
-            ~init:(acc, [])
-            new_children
+        let acc =
+          List.fold ~f:(Fn.flip ClassHierarchyGraph.ClassNameSet.add) ~init:acc new_children
         in
-        find_children_aux (new_children @ rest) acc
+        find_children_transitive ~class_hierarchy_graph (new_children @ rest) acc
   in
   let child_name_set =
-    let child_name_set = ClassHierarchyGraph.SharedMemory.get ~class_name class_hierarchy_graph in
-    if is_transitive then (
-      if cache && String.Map.mem !chilren_cache class_name then
-        String.Map.find_exn !chilren_cache class_name
-      else
-        let child_name_set =
-          find_children_aux
-            (ClassHierarchyGraph.ClassNameSet.elements child_name_set)
-            child_name_set
-        in
-        if cache then
-          chilren_cache := String.Map.add_exn !chilren_cache ~key:class_name ~data:child_name_set;
-        child_name_set)
+    if is_transitive then
+      match ClassHierarchyGraph.SharedMemory.get_transitive ~class_name class_hierarchy_graph with
+      | Some child_name_set -> child_name_set
+      (* cache miss, recalculate *)
+      | None ->
+          find_children_transitive
+            ~class_hierarchy_graph
+            [class_name]
+            ClassHierarchyGraph.ClassNameSet.empty
     else
-      child_name_set
+      ClassHierarchyGraph.SharedMemory.get ~class_name class_hierarchy_graph
   in
   let child_name_set =
     if includes_self then
@@ -526,7 +512,7 @@ let matches_annotation_constraint
       let parsed_type = GlobalResolution.parse_annotation resolution annotation_expression in
       match extract_class_name parsed_type with
       | Some extracted_class_name ->
-          find_children ~cache:true ~class_hierarchy_graph ~is_transitive ~includes_self class_name
+          find_children ~class_hierarchy_graph ~is_transitive ~includes_self class_name
           |> ClassHierarchyGraph.ClassNameSet.mem extracted_class_name
       | None -> false)
   | _ -> false
@@ -637,13 +623,13 @@ let rec class_matches_constraint ~resolution ~class_hierarchy_graph ~name_captur
   | ModelQuery.ClassConstraint.FullyQualifiedNameConstraint name_constraint ->
       matches_name_constraint ~name_captures ~name_constraint name
   | ModelQuery.ClassConstraint.Extends { class_name; is_transitive; includes_self } ->
-      find_children ~cache:true ~class_hierarchy_graph ~is_transitive ~includes_self class_name
+      find_children ~class_hierarchy_graph ~is_transitive ~includes_self class_name
       |> ClassHierarchyGraph.ClassNameSet.mem name
   | ModelQuery.ClassConstraint.DecoratorConstraint decorator_constraint ->
       class_matches_decorator_constraint ~name_captures ~resolution ~decorator_constraint name
   | ModelQuery.ClassConstraint.AnyChildConstraint { class_constraint; is_transitive; includes_self }
     ->
-      find_children ~cache:false ~class_hierarchy_graph ~is_transitive ~includes_self name
+      find_children ~class_hierarchy_graph ~is_transitive ~includes_self name
       |> ClassHierarchyGraph.ClassNameSet.exists (fun name ->
              class_matches_constraint
                ~resolution
@@ -1875,6 +1861,10 @@ let generate_models_from_queries
   =
   let { PartitionTargetQueries.callable_queries; attribute_queries; global_queries } =
     PartitionTargetQueries.partition queries
+  in
+  let class_names = ModelParseResult.ModelQuery.extract_class_names queries in
+  let class_hierarchy_graph =
+    ClassHierarchyGraph.SharedMemory.from_heap ~transitive:class_names class_hierarchy_graph
   in
 
   (* Generate models for functions and methods. *)

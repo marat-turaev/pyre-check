@@ -596,6 +596,50 @@ module ModelQuery = struct
   let unique_identifier = function
     | { name; path = None; _ } -> name
     | { name; path = Some path; _ } -> Format.sprintf "%s/%s" (PyrePath.get_suffix_path path) name
+
+
+  let extract_class_names model_queries =
+    let rec process_class_constraint acc class_constraint =
+      match class_constraint with
+      | ClassConstraint.Extends { class_name; _ } -> class_name :: acc
+      | ClassConstraint.AnyOf constraints
+      | ClassConstraint.AllOf constraints ->
+          List.fold ~f:process_class_constraint ~init:acc constraints
+      | ClassConstraint.Not constraint_ -> process_class_constraint acc constraint_
+      | _ -> acc
+    in
+    let process_annotation_constraint annotation_constraint acc =
+      match annotation_constraint with
+      | AnnotationConstraint.AnnotationClassExtends { class_name; _ } -> class_name :: acc
+      | _ -> acc
+    in
+    let rec process_parameter_constraint acc parameter_constraint =
+      match parameter_constraint with
+      | ParameterConstraint.AnnotationConstraint annotation_constraint ->
+          process_annotation_constraint annotation_constraint acc
+      | ParameterConstraint.AnyOf constraints
+      | ParameterConstraint.AllOf constraints ->
+          List.fold ~f:process_parameter_constraint ~init:acc constraints
+      | ParameterConstraint.Not constraint_ -> process_parameter_constraint acc constraint_
+      | _ -> acc
+    in
+    let rec process_constraint acc constraint_ =
+      match constraint_ with
+      | Constraint.ClassConstraint class_constraint -> process_class_constraint acc class_constraint
+      | Constraint.AnnotationConstraint annotation_constraint ->
+          process_annotation_constraint annotation_constraint acc
+      | Constraint.AnyParameterConstraint parameter_constraint ->
+          process_parameter_constraint acc parameter_constraint
+      | Constraint.AnyOf constraints
+      | Constraint.AllOf constraints ->
+          List.fold ~f:process_constraint ~init:acc constraints
+      | Constraint.Not constraint_ -> process_constraint acc constraint_
+      | _ -> acc
+    in
+    List.fold
+      ~f:(fun acc model_query -> List.fold ~f:process_constraint ~init:acc model_query.where)
+      ~init:[]
+      model_queries
 end
 
 type t = {

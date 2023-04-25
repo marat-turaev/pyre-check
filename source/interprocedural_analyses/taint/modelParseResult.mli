@@ -344,6 +344,8 @@ module ModelQuery : sig
   [@@deriving show, equal]
 
   val unique_identifier : t -> string
+
+  val extract_class_names : t list -> string list
 end
 
 type t = {
