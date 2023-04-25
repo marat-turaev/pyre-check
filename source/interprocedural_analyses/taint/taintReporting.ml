@@ -298,7 +298,16 @@ let save_results_to_directory
     ()
 
 
-let finish_fixpoint ~scheduler ~taint_configuration ~callables ~fixpoint_timer ~fixpoint_state =
+let produce_errors
+    ~scheduler
+    ~static_analysis_configuration:
+      Configuration.StaticAnalysis.{ configuration = { show_error_traces; _ }; _ }
+    ~filename_lookup
+    ~taint_configuration
+    ~callables
+    ~fixpoint_timer
+    ~fixpoint_state
+  =
   let errors =
     extract_errors
       ~taint_configuration
@@ -323,49 +332,10 @@ let finish_fixpoint ~scheduler ~taint_configuration ~callables ~fixpoint_timer ~
         ]
       ()
   in
-  errors
-
-
-let report
-    ~scheduler
-    ~static_analysis_configuration:
-      {
-        Configuration.StaticAnalysis.save_results_to;
-        output_format;
-        configuration = { local_root; show_error_traces; _ };
-        _;
-      }
-    ~taint_configuration
-    ~filename_lookup
-    ~override_graph
-    ~callables
-    ~skipped_overrides
-    ~model_verification_errors
-    ~fixpoint_state
-    ~errors
-  =
-  (* Dump results to output directory if one was provided, and return a list of json (empty whenever
-     we dumped to a directory) to summarize *)
   let error_to_json error =
     error
     |> Error.instantiate ~show_error_traces ~lookup:filename_lookup
     |> Error.Instantiated.to_yojson
   in
   let errors = List.map errors ~f:error_to_json in
-  match save_results_to with
-  | Some result_directory ->
-      save_results_to_directory
-        ~scheduler
-        ~taint_configuration
-        ~result_directory
-        ~output_format
-        ~local_root
-        ~filename_lookup
-        ~override_graph
-        ~skipped_overrides
-        ~callables
-        ~model_verification_errors
-        ~fixpoint_state
-        ~errors;
-      []
-  | _ -> errors
+  errors

@@ -579,9 +579,11 @@ let run_taint_analysis
       ();
 
     let errors =
-      Reporting.finish_fixpoint
+      Reporting.produce_errors
         ~scheduler
+        ~static_analysis_configuration
         ~taint_configuration:taint_configuration_shared_memory
+        ~filename_lookup
         ~callables
         ~fixpoint_timer
         ~fixpoint_state
@@ -590,17 +592,34 @@ let run_taint_analysis
     compact_ocaml_heap ~name:"before_reporting";
 
     let summary =
-      Reporting.report
-        ~scheduler
-        ~static_analysis_configuration
-        ~taint_configuration:taint_configuration_shared_memory
-        ~filename_lookup
-        ~override_graph:override_graph_shared_memory
-        ~callables
-        ~skipped_overrides
-        ~model_verification_errors
-        ~fixpoint_state
-        ~errors
+      let {
+        Configuration.StaticAnalysis.save_results_to;
+        output_format;
+        configuration = { local_root; _ };
+        _;
+      }
+        =
+        static_analysis_configuration
+      in
+      (* Dump results to output directory if one was provided, and return a list of json (empty
+         whenever we dumped to a directory) to summarize *)
+      match save_results_to with
+      | Some result_directory ->
+          Reporting.save_results_to_directory
+            ~scheduler
+            ~taint_configuration:taint_configuration_shared_memory
+            ~result_directory
+            ~output_format
+            ~local_root
+            ~filename_lookup
+            ~override_graph:override_graph_shared_memory
+            ~callables
+            ~skipped_overrides
+            ~model_verification_errors
+            ~fixpoint_state
+            ~errors;
+          []
+      | _ -> errors
     in
     Yojson.Safe.pretty_to_string (`List summary) |> Log.print "%s"
   with
