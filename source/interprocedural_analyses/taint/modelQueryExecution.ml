@@ -1140,6 +1140,40 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
     List.fold targets ~init:Registry.empty ~f:fold
 
 
+  let generate_models_from_queries_on_target
+      ~verbose
+      ~resolution
+      ~class_hierarchy_graph
+      ~source_sink_filter
+      ~stubs
+      ~queries
+      ~target
+    =
+    let fold model_query_results query =
+      let identifier = ModelQuery.unique_identifier query in
+      match
+        generate_model_from_query_on_target
+          ~verbose
+          ~resolution
+          ~class_hierarchy_graph
+          ~source_sink_filter
+          ~stubs
+          ~target
+          query
+      with
+      | Ok (Some model) ->
+          let registry = Registry.singleton ~target ~model in
+          ModelQueryRegistryMap.add model_query_results ~model_query_identifier:identifier ~registry
+      | Ok None -> model_query_results
+      | Error error ->
+          let () =
+            Log.error "Error while executing model query: %s" (ModelVerificationError.display error)
+          in
+          model_query_results
+    in
+    List.fold queries ~init:ModelQueryRegistryMap.empty ~f:fold
+
+
   let generate_models_from_queries_on_targets
       ~verbose
       ~resolution
@@ -1149,21 +1183,20 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
       ~targets
       queries
     =
-    let fold model_query_results query =
-      let identifier = ModelQuery.unique_identifier query in
-      let registry =
-        generate_models_from_query_on_targets
+    let fold model_query_results target =
+      let model_query =
+        generate_models_from_queries_on_target
           ~verbose
           ~resolution
           ~class_hierarchy_graph
           ~source_sink_filter
           ~stubs
-          ~targets
-          query
+          ~queries
+          ~target
       in
-      ModelQueryRegistryMap.add model_query_results ~model_query_identifier:identifier ~registry
+      ModelQueryRegistryMap.merge ~model_join:Model.join_user_models model_query_results model_query
     in
-    List.fold queries ~init:ModelQueryRegistryMap.empty ~f:fold
+    List.fold targets ~init:ModelQueryRegistryMap.empty ~f:fold
 
 
   let generate_cache_from_query_on_target

@@ -142,6 +142,8 @@ module Make (Analysis : ANALYSIS) = struct
 
     let empty = Target.Map.empty
 
+    let singleton ~target ~model = Target.Map.singleton target model
+
     let is_empty = Target.Map.is_empty
 
     let size registry = Target.Map.length registry

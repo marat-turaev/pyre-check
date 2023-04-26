@@ -122,6 +122,8 @@ module Make (Analysis : ANALYSIS) : sig
 
     val empty : t
 
+    val singleton : target:Target.t -> model:Analysis.Model.t -> t
+
     val is_empty : t -> bool
 
     val size : t -> int
