@@ -73,7 +73,7 @@ module CallableQueryExecutor : sig
     :  verbose:bool ->
     resolution:Analysis.GlobalResolution.t ->
     class_hierarchy_graph:Interprocedural.ClassHierarchyGraph.SharedMemory.t ->
-    target:Interprocedural.Target.t ->
+    modelable:ModelParseResult.Modelable.t ->
     ModelParseResult.ModelQuery.t ->
     ModelParseResult.ModelAnnotation.t list
 
@@ -91,7 +91,7 @@ module AttributeQueryExecutor : sig
     :  verbose:bool ->
     resolution:Analysis.GlobalResolution.t ->
     class_hierarchy_graph:Interprocedural.ClassHierarchyGraph.SharedMemory.t ->
-    target:Interprocedural.Target.t ->
+    modelable:ModelParseResult.Modelable.t ->
     ModelParseResult.ModelQuery.t ->
     ModelParseResult.TaintAnnotation.t list
 
@@ -117,7 +117,7 @@ module GlobalVariableQueryExecutor : sig
     :  verbose:bool ->
     resolution:Analysis.GlobalResolution.t ->
     class_hierarchy_graph:Interprocedural.ClassHierarchyGraph.SharedMemory.t ->
-    target:Interprocedural.Target.t ->
+    modelable:ModelParseResult.Modelable.t ->
     ModelParseResult.ModelQuery.t ->
     ModelParseResult.TaintAnnotation.t list
 
