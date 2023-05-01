@@ -84,6 +84,11 @@ module CallableQueryExecutor : sig
     targets:Interprocedural.Target.t list ->
     ModelParseResult.ModelQuery.t list ->
     ReadWriteCache.t
+
+  val make_modelable
+    :  resolution:Analysis.GlobalResolution.t ->
+    Interprocedural.Target.t ->
+    ModelParseResult.Modelable.t
 end
 
 module AttributeQueryExecutor : sig
@@ -110,6 +115,11 @@ module AttributeQueryExecutor : sig
     string ->
     string ->
     Ast.Expression.t option
+
+  val make_modelable
+    :  resolution:Analysis.GlobalResolution.t ->
+    Interprocedural.Target.t ->
+    ModelParseResult.Modelable.t
 end
 
 module GlobalVariableQueryExecutor : sig
@@ -135,6 +145,11 @@ module GlobalVariableQueryExecutor : sig
     :  resolution:Analysis.GlobalResolution.t ->
     Ast.Reference.t ->
     Ast.Expression.t option
+
+  val make_modelable
+    :  resolution:Analysis.GlobalResolution.t ->
+    Interprocedural.Target.t ->
+    ModelParseResult.Modelable.t
 end
 
 val generate_models_from_queries
