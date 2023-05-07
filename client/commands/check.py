@@ -183,7 +183,7 @@ def parse_type_error_response(response: str) -> List[error.Error]:
         raise InvalidCheckResponse(message) from decode_error
 
 
-def _run_check_command(command: Sequence[str], output: str) -> CheckResult:
+def _run_check_command(command: Sequence[str]) -> CheckResult:
     with backend_arguments.backend_log_file(prefix="pyre_check") as log_file:
         with start.background_logging(Path(log_file.name)):
             # lint-ignore: NoUnsafeExecRule
@@ -230,15 +230,14 @@ def run_check(
         raise configuration_module.InvalidConfiguration(
             "Cannot locate a Pyre binary to run."
         )
+    LOG.info(f"Pyre binary is located at `{binary_location}`")
 
     with create_check_arguments_and_cleanup(
         configuration, check_arguments
     ) as arguments:
         with backend_arguments.temporary_argument_file(arguments) as argument_file_path:
             check_command = [str(binary_location), "newcheck", str(argument_file_path)]
-            return _run_check_command(
-                command=check_command, output=check_arguments.output
-            )
+            return _run_check_command(check_command)
 
 
 def run(

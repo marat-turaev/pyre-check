@@ -88,7 +88,6 @@ class CommandArguments:
     save_initial_state_to: Optional[str] = None
     load_initial_state_from: Optional[str] = None
     changed_files_path: Optional[str] = None
-    saved_state_project: Optional[str] = None
     dot_pyre_directory: Optional[Path] = None
     isolation_prefix: Optional[str] = None
     python_version: Optional[str] = None
@@ -97,7 +96,6 @@ class CommandArguments:
     shared_memory_hash_table_power: Optional[int] = None
     number_of_workers: Optional[int] = None
     use_buck2: Optional[bool] = None
-    configuration_path: Optional[str] = None
     enable_unawaited_awaitable_analysis: Optional[bool] = None
     include_suppressed_errors: Optional[bool] = None
 
@@ -116,7 +114,6 @@ class StartArguments:
     no_watchman: bool = False
     noninteractive: bool = False
     save_initial_state_to: Optional[str] = None
-    saved_state_project: Optional[str] = None
     sequential: bool = False
     show_error_traces: bool = False
     store_type_check_resolution: bool = False
@@ -149,7 +146,6 @@ class StartArguments:
             no_watchman=no_watchman,
             noninteractive=command_argument.noninteractive,
             save_initial_state_to=command_argument.save_initial_state_to,
-            saved_state_project=command_argument.saved_state_project,
             sequential=command_argument.sequential,
             show_error_traces=command_argument.show_error_traces,
             store_type_check_resolution=store_type_check_resolution,

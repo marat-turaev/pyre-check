@@ -78,8 +78,6 @@ module type LOGGER = sig
   val override_analysis_end : callable:Target.t -> timer:Timer.t -> unit
 
   val on_analyze_define_exception : iteration:int -> callable:Target.t -> exn:exn -> unit
-
-  val on_global_fixpoint_exception : exn:exn -> unit
 end
 
 (** Must be implemented to perform a global fixpoint. *)
@@ -122,9 +120,9 @@ module Make (Analysis : ANALYSIS) : sig
 
     val empty : t
 
-    val singleton : target:Target.t -> model:Analysis.Model.t -> t
-
     val is_empty : t -> bool
+
+    val singleton : target:Target.t -> model:Analysis.Model.t -> t
 
     val size : t -> int
 
@@ -140,6 +138,12 @@ module Make (Analysis : ANALYSIS) : sig
     val get : t -> Target.t -> Analysis.Model.t option
 
     val merge : join:(Analysis.Model.t -> Analysis.Model.t -> Analysis.Model.t) -> t -> t -> t
+
+    val merge_skewed
+      :  join:(Analysis.Model.t -> Analysis.Model.t -> Analysis.Model.t) ->
+      t ->
+      t ->
+      t
 
     val of_alist
       :  join:(Analysis.Model.t -> Analysis.Model.t -> Analysis.Model.t) ->

@@ -51,6 +51,8 @@ module type FUNCTION_CONTEXT = sig
 
   val class_interval_graph : Interprocedural.ClassIntervalSetGraph.SharedMemory.t
 
+  val global_constants : Interprocedural.GlobalConstants.SharedMemory.t
+
   val call_graph_of_define : CallGraph.DefineCallGraph.t
 
   val get_callee_model : Interprocedural.Target.t -> Model.t option
@@ -1751,77 +1753,56 @@ module State (FunctionContext : FUNCTION_CONTEXT) = struct
           ~string_literal:value
           [expression]
     | {
-        callee =
-          {
-            Node.value = Name (Name.Attribute { base; attribute = "__add__" as function_name; _ });
-            _;
-          };
-        arguments;
-      }
-    | {
-        callee =
-          {
-            Node.value = Name (Name.Attribute { base; attribute = "__mod__" as function_name; _ });
-            _;
-          };
-        arguments;
-      }
-    | {
-        callee =
-          {
-            Node.value = Name (Name.Attribute { base; attribute = "format" as function_name; _ });
-            _;
-          };
-        arguments;
-      } ->
-        (* User-defined or inferred models. *)
-        let state_from_normal_models =
-          apply_callees
-            ~resolution
-            ~is_property:false
-            ~call_location:location
-            ~state
-            ~callee
-            ~arguments
-            ~call_taint:taint
-            callees
+     callee =
+       {
+         Node.value =
+           Name
+             (Name.Attribute
+               { base; attribute = ("__add__" | "__mod__" | "format") as function_name; _ });
+         _;
+       };
+     arguments;
+    }
+      when CallGraph.CallCallees.is_string_method callees ->
+        let globals_to_constants = function
+          | { Node.value = Expression.Name (Name.Identifier identifier); _ } as value -> (
+              let as_reference = Reference.create identifier in
+              let global_string =
+                Interprocedural.GlobalConstants.SharedMemory.get
+                  FunctionContext.global_constants
+                  as_reference
+              in
+              match global_string with
+              | Some global_string ->
+                  global_string
+                  |> (fun string_literal -> Expression.Constant (Constant.String string_literal))
+                  |> Node.create ~location:value.location
+              | _ -> value)
+          | value -> value
         in
-        let is_string_format =
-          List.exists callees.call_targets ~f:(fun call_target ->
-              match Interprocedural.Target.class_name call_target.target with
-              | Some "str" -> true
-              | _ -> false)
+        let breadcrumbs =
+          match function_name with
+          | "__mod__"
+          | "format" ->
+              Features.BreadcrumbSet.singleton (Features.format_string ())
+          | _ -> Features.BreadcrumbSet.empty
         in
-        if not is_string_format then
-          state_from_normal_models
-        else
-          (* Additional hard-coded models for analyzing implicit sinks during string formatting
-             operations. *)
-          let breadcrumbs =
-            match function_name with
-            | "__mod__"
-            | "format" ->
-                Features.BreadcrumbSet.singleton (Features.format_string ())
-            | _ -> Features.BreadcrumbSet.empty
-          in
-          let substrings =
-            arguments
-            |> List.map ~f:(fun argument -> argument.Call.Argument.value)
-            |> List.cons base
-          in
-          let string_literal, substrings = CallModel.arguments_for_string_format substrings in
-          let state_from_string_format =
-            analyze_joined_string
-              ~resolution
-              ~taint
-              ~state
-              ~location
-              ~breadcrumbs
-              ~increase_trace_length:true
-              ~string_literal
-              substrings
-          in
-          join state_from_normal_models state_from_string_format
+        let substrings =
+          arguments
+          |> List.map ~f:(fun argument -> argument.Call.Argument.value)
+          |> List.cons base
+          |> List.map ~f:globals_to_constants
+        in
+        let string_literal, substrings = CallModel.arguments_for_string_format substrings in
+        analyze_joined_string
+          ~resolution
+          ~taint
+          ~state
+          ~location
+          ~breadcrumbs
+          ~increase_trace_length:true
+          ~string_literal
+          substrings
     | {
      Call.callee = { Node.value = Name (Name.Identifier "reveal_taint"); _ };
      arguments = [{ Call.Argument.value = expression; _ }];
@@ -1900,7 +1881,12 @@ module State (FunctionContext : FUNCTION_CONTEXT) = struct
               taint)
           ~init:taint
     in
-    let taint = BackwardState.Tree.add_local_breadcrumbs breadcrumbs taint in
+    let taint =
+      taint
+      |> BackwardState.Tree.collapse ~breadcrumbs:(Features.tito_broadening_set ())
+      |> BackwardTaint.add_local_breadcrumbs breadcrumbs
+      |> BackwardState.Tree.create_leaf
+    in
     let analyze_stringify_callee
         ~taint_to_join
         ~state_to_join
@@ -2449,6 +2435,7 @@ let run
     ~taint_configuration
     ~environment
     ~class_interval_graph
+    ~global_constants
     ~qualifier
     ~callable
     ~define
@@ -2484,6 +2471,8 @@ let run
     let taint_configuration = taint_configuration
 
     let class_interval_graph = class_interval_graph
+
+    let global_constants = global_constants
 
     let call_graph_of_define = call_graph_of_define
 

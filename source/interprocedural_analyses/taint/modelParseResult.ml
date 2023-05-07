@@ -600,46 +600,43 @@ module ModelQuery = struct
     | { name; path = Some path; _ } -> Format.sprintf "%s/%s" (PyrePath.get_suffix_path path) name
 
 
-  let extract_class_names model_queries =
-    let rec process_class_constraint acc class_constraint =
-      match class_constraint with
-      | ClassConstraint.Extends { class_name; _ } -> class_name :: acc
+  let extract_extends_from_model_queries model_queries =
+    let rec process_class_constraint result = function
+      | ClassConstraint.Extends { class_name; _ } -> class_name :: result
       | ClassConstraint.AnyOf constraints
       | ClassConstraint.AllOf constraints ->
-          List.fold ~f:process_class_constraint ~init:acc constraints
-      | ClassConstraint.Not constraint_ -> process_class_constraint acc constraint_
-      | _ -> acc
+          List.fold ~f:process_class_constraint ~init:result constraints
+      | ClassConstraint.Not constraint_ -> process_class_constraint result constraint_
+      | _ -> result
     in
-    let process_annotation_constraint annotation_constraint acc =
-      match annotation_constraint with
-      | AnnotationConstraint.AnnotationClassExtends { class_name; _ } -> class_name :: acc
-      | _ -> acc
+    let process_annotation_constraint result = function
+      | AnnotationConstraint.AnnotationClassExtends { class_name; _ } -> class_name :: result
+      | _ -> result
     in
-    let rec process_parameter_constraint acc parameter_constraint =
-      match parameter_constraint with
+    let rec process_parameter_constraint result = function
       | ParameterConstraint.AnnotationConstraint annotation_constraint ->
-          process_annotation_constraint annotation_constraint acc
+          process_annotation_constraint result annotation_constraint
       | ParameterConstraint.AnyOf constraints
       | ParameterConstraint.AllOf constraints ->
-          List.fold ~f:process_parameter_constraint ~init:acc constraints
-      | ParameterConstraint.Not constraint_ -> process_parameter_constraint acc constraint_
-      | _ -> acc
+          List.fold ~f:process_parameter_constraint ~init:result constraints
+      | ParameterConstraint.Not constraint_ -> process_parameter_constraint result constraint_
+      | _ -> result
     in
-    let rec process_constraint acc constraint_ =
-      match constraint_ with
-      | Constraint.ClassConstraint class_constraint -> process_class_constraint acc class_constraint
+    let rec process_constraint result = function
+      | Constraint.ClassConstraint class_constraint ->
+          process_class_constraint result class_constraint
       | Constraint.AnnotationConstraint annotation_constraint ->
-          process_annotation_constraint annotation_constraint acc
+          process_annotation_constraint result annotation_constraint
       | Constraint.AnyParameterConstraint parameter_constraint ->
-          process_parameter_constraint acc parameter_constraint
+          process_parameter_constraint result parameter_constraint
       | Constraint.AnyOf constraints
       | Constraint.AllOf constraints ->
-          List.fold ~f:process_constraint ~init:acc constraints
-      | Constraint.Not constraint_ -> process_constraint acc constraint_
-      | _ -> acc
+          List.fold ~f:process_constraint ~init:result constraints
+      | Constraint.Not constraint_ -> process_constraint result constraint_
+      | _ -> result
     in
     List.fold
-      ~f:(fun acc model_query -> List.fold ~f:process_constraint ~init:acc model_query.where)
+      ~f:(fun result model_query -> List.fold ~f:process_constraint ~init:result model_query.where)
       ~init:[]
       model_queries
 end
@@ -770,7 +767,7 @@ let join
     { models = models_right; queries = queries_right; errors = errors_right }
   =
   {
-    models = Registry.merge ~join:Model.join_user_models models_left models_right;
+    models = Registry.merge_skewed ~join:Model.join_user_models models_left models_right;
     queries = List.rev_append queries_right queries_left;
     errors = List.rev_append errors_right errors_left;
   }

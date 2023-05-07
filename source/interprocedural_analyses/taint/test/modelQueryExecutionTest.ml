@@ -40,7 +40,7 @@ let test_generated_annotations context =
         ~scheduler:(mock_scheduler ())
         ~environment:type_environment
         ~qualifiers:[Ast.Reference.create "test"]
-      |> ClassHierarchyGraph.SharedMemory.from_heap ~transitive:[]
+      |> ClassHierarchyGraph.SharedMemory.from_heap ~store_transitive_children_for:[]
     in
     let actual =
       ModelQueryExecution.CallableQueryExecutor.generate_annotations_from_query_on_target
@@ -69,7 +69,7 @@ let test_generated_annotations context =
         ~scheduler:(mock_scheduler ())
         ~environment:type_environment
         ~qualifiers:[Ast.Reference.create "test"]
-      |> ClassHierarchyGraph.SharedMemory.from_heap ~transitive:[]
+      |> ClassHierarchyGraph.SharedMemory.from_heap ~store_transitive_children_for:[]
     in
     let target = name |> Ast.Reference.create |> Target.create_object in
     let actual =
@@ -99,7 +99,7 @@ let test_generated_annotations context =
         ~scheduler:(mock_scheduler ())
         ~environment:type_environment
         ~qualifiers:[Ast.Reference.create "test"]
-      |> ClassHierarchyGraph.SharedMemory.from_heap ~transitive:[]
+      |> ClassHierarchyGraph.SharedMemory.from_heap ~store_transitive_children_for:[]
     in
     let target = name |> Ast.Reference.create |> Target.create_object in
     let actual =
@@ -4592,7 +4592,7 @@ let test_generated_cache context =
         ~scheduler:(mock_scheduler ())
         ~environment:type_environment
         ~qualifiers:[Ast.Reference.create "test"]
-      |> ClassHierarchyGraph.SharedMemory.from_heap ~transitive:[]
+      |> ClassHierarchyGraph.SharedMemory.from_heap ~store_transitive_children_for:[]
     in
     let actual =
       ModelQueryExecution.CallableQueryExecutor.generate_cache_from_queries_on_targets

@@ -29,7 +29,7 @@ module ModelQueryRegistryMap = struct
     if not (Registry.is_empty registry) then
       String.Map.update model_query_map model_query_identifier ~f:(function
           | None -> registry
-          | Some existing -> Registry.merge ~join:Model.join_user_models existing registry)
+          | Some existing -> Registry.merge_skewed ~join:Model.join_user_models existing registry)
     else
       model_query_map
 
@@ -38,7 +38,7 @@ module ModelQueryRegistryMap = struct
 
   let merge ~model_join left right =
     String.Map.merge left right ~f:(fun ~key:_ -> function
-      | `Both (models1, models2) -> Some (Registry.merge ~join:model_join models1 models2)
+      | `Both (models1, models2) -> Some (Registry.merge_skewed ~join:model_join models1 models2)
       | `Left models
       | `Right models ->
           Some models)
@@ -310,18 +310,18 @@ module SanitizedCallArgumentSet = Set.Make (struct
 end)
 
 let find_children ~class_hierarchy_graph ~is_transitive ~includes_self class_name =
-  let rec find_children_transitive ~class_hierarchy_graph to_process acc =
+  let rec find_children_transitive ~class_hierarchy_graph to_process result =
     match to_process with
-    | [] -> acc
+    | [] -> result
     | class_name :: rest ->
         let child_name_set =
           ClassHierarchyGraph.SharedMemory.get ~class_name class_hierarchy_graph
         in
         let new_children = ClassHierarchyGraph.ClassNameSet.elements child_name_set in
-        let acc =
-          List.fold ~f:(Fn.flip ClassHierarchyGraph.ClassNameSet.add) ~init:acc new_children
+        let result =
+          List.fold ~f:(Fn.flip ClassHierarchyGraph.ClassNameSet.add) ~init:result new_children
         in
-        find_children_transitive ~class_hierarchy_graph (new_children @ rest) acc
+        find_children_transitive ~class_hierarchy_graph (List.rev_append new_children rest) result
   in
   let child_name_set =
     if is_transitive then
@@ -1030,7 +1030,7 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
       ~source_sink_filter
       ~stubs
       ~queries
-      ~target
+      target
     =
     let modelable = QueryKind.make_modelable ~resolution target in
     let fold model_query_results query =
@@ -1077,7 +1077,7 @@ module MakeQueryExecutor (QueryKind : QUERY_KIND) = struct
           ~source_sink_filter
           ~stubs
           ~queries
-          ~target
+          target
       in
       ModelQueryRegistryMap.merge ~model_join:Model.join_user_models model_query_results model_query
     in
@@ -1790,12 +1790,17 @@ let generate_models_from_queries
     ~stubs
     queries
   =
+  let extends_to_classnames =
+    ModelParseResult.ModelQuery.extract_extends_from_model_queries queries
+  in
+  let class_hierarchy_graph =
+    ClassHierarchyGraph.SharedMemory.from_heap
+      ~store_transitive_children_for:extends_to_classnames
+      class_hierarchy_graph
+  in
+
   let { PartitionTargetQueries.callable_queries; attribute_queries; global_queries } =
     PartitionTargetQueries.partition queries
-  in
-  let class_names = ModelParseResult.ModelQuery.extract_class_names queries in
-  let class_hierarchy_graph =
-    ClassHierarchyGraph.SharedMemory.from_heap ~transitive:class_names class_hierarchy_graph
   in
 
   (* Generate models for functions and methods. *)

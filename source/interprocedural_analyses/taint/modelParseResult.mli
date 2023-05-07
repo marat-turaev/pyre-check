@@ -345,7 +345,7 @@ module ModelQuery : sig
 
   val unique_identifier : t -> string
 
-  val extract_class_names : t list -> string list
+  val extract_extends_from_model_queries : t list -> string list
 end
 
 module NameCaptures : sig

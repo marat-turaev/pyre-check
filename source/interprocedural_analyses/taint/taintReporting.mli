@@ -44,7 +44,7 @@ val save_results_to_directory
   output_format:Configuration.TaintOutputFormat.t ->
   local_root:PyrePath.t ->
   filename_lookup:(Ast.Reference.t -> string option) ->
-  override_graph:Interprocedural.OverrideGraph.SharedMemory.t ->
+  override_graph:OverrideGraph.SharedMemory.t ->
   skipped_overrides:Target.t list ->
   callables:Target.Set.t ->
   model_verification_errors:ModelVerificationError.t list ->

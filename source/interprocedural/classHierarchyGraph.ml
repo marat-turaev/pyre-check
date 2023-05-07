@@ -197,7 +197,7 @@ module SharedMemory = struct
 
   type t = Handle
 
-  let add Handle ~class_name ~class_name_set = DirectChildren.add class_name class_name_set
+  let add Handle ~class_name ~direct_children = DirectChildren.add class_name direct_children
 
   let get Handle ~class_name =
     DirectChildren.get class_name |> Option.value ~default:ClassNameSet.empty
@@ -205,37 +205,37 @@ module SharedMemory = struct
 
   let rec add_children ~class_hierarchy_graph =
     ClassNameSet.iter (fun class_name ->
-        let class_name_set = Heap.children class_hierarchy_graph class_name in
-        add Handle ~class_name ~class_name_set;
-        add_children ~class_hierarchy_graph class_name_set)
+        let direct_children = Heap.children class_hierarchy_graph class_name in
+        add Handle ~class_name ~direct_children;
+        add_children ~class_hierarchy_graph direct_children)
 
 
-  let add_transitive Handle ~class_name ~class_name_set =
-    TransitiveChildren.add class_name class_name_set
+  let add_transitive Handle ~class_name ~transitive_children =
+    TransitiveChildren.add class_name transitive_children
 
 
   let get_transitive Handle ~class_name = TransitiveChildren.get class_name
 
-  let rec find_children_transitive ~class_hierarchy_graph to_process acc =
+  let rec find_children_transitive ~class_hierarchy_graph to_process result =
     match to_process with
-    | [] -> acc
+    | [] -> result
     | class_name :: rest ->
         let child_name_set = Heap.children class_hierarchy_graph class_name in
         let new_children = ClassNameSet.elements child_name_set in
-        let acc = List.fold ~f:(Fn.flip ClassNameSet.add) ~init:acc new_children in
-        find_children_transitive ~class_hierarchy_graph (new_children @ rest) acc
+        let result = List.fold ~f:(Fn.flip ClassNameSet.add) ~init:result new_children in
+        find_children_transitive ~class_hierarchy_graph (List.rev_append new_children rest) result
 
 
   let add_children_transitive ~class_hierarchy_graph =
     List.iter ~f:(fun class_name ->
-        let class_name_set =
+        let transitive_children =
           find_children_transitive ~class_hierarchy_graph [class_name] ClassNameSet.empty
         in
-        add_transitive Handle ~class_name ~class_name_set)
+        add_transitive Handle ~class_name ~transitive_children)
 
 
-  let from_heap ~transitive class_hierarchy_graph =
+  let from_heap ~store_transitive_children_for class_hierarchy_graph =
     let () = add_children ~class_hierarchy_graph (Heap.roots class_hierarchy_graph) in
-    let () = add_children_transitive ~class_hierarchy_graph transitive in
+    let () = add_children_transitive ~class_hierarchy_graph store_transitive_children_for in
     Handle
 end
